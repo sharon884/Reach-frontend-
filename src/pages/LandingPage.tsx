@@ -1,11 +1,13 @@
 import Navbar from "../components/layout/Navbar";
+import HeroSection from "../components/landing/ HeroSection";
+import CommunityFeed from "../components/landing/CommunityFeed";
 
 function LandingPage() {
     return (
         <main>
             <Navbar />
-
-            <h1>Reach</h1>
+            <HeroSection />
+            <CommunityFeed/>
         </main>
     );
 }
