@@ -54,3 +54,17 @@ export async function resendOtp(
 ): Promise<void> {
     await api.post("/auth/resend-otp", data);
 }
+
+
+
+//Login
+export interface LoginRequest {
+    email: string;
+    password: string;
+}
+
+export async function login(
+    data: LoginRequest,
+): Promise<void> {
+    await api.post("/auth/login", data);
+}
