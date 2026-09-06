@@ -1,10 +1,11 @@
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./routes/AppRoutes";
+
 function App() {
     return (
-        <div className="flex min-h-screen items-center justify-center">
-            <h1 className="text-4xl font-bold">
-                Reach
-            </h1>
-        </div>
+        <BrowserRouter>
+            <AppRoutes />
+        </BrowserRouter>
     );
 }
 
