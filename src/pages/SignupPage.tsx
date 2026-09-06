@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Check, Eye, EyeOff, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { signup } from "../services/auth/auth.service";
 import Button from "../components/common/Button";
@@ -15,6 +15,7 @@ function SignupPage() {
         termsAccepted: false,
     });
 
+    const navigate = useNavigate();
     const [errors, setErrors] = useState<Record<string, string>>({});
 
     const [showPassword, setShowPassword] = useState(false);
@@ -76,7 +77,12 @@ function SignupPage() {
                 password: result.data.password,
             });
 
-            console.log("Signup successful:", response);
+            navigate("/verify-otp", {
+                state: {
+                    userId: response.id,
+                    email: response.email,
+                },
+            });
         } catch (error) {
             console.error("Signup failed:", error);
         }
@@ -186,8 +192,8 @@ function SignupPage() {
                                     onChange={handleChange}
                                     placeholder="e.g. Jane Doe"
                                     className={`w-full rounded-lg border bg-white px-3 py-2.5 text-sm text-reach-text outline-none transition placeholder:text-reach-text/30 focus:border-reach-plum/50 ${errors.fullName
-                                            ? "border-red-400"
-                                            : "border-reach-plum/15"
+                                        ? "border-red-400"
+                                        : "border-reach-plum/15"
                                         }`}
                                 />
 
@@ -215,8 +221,8 @@ function SignupPage() {
                                     onChange={handleChange}
                                     placeholder="jane@example.com"
                                     className={`w-full rounded-lg border bg-white px-3 py-2.5 text-sm text-reach-text outline-none transition placeholder:text-reach-text/30 focus:border-reach-plum/50 ${errors.email
-                                            ? "border-red-400"
-                                            : "border-reach-plum/15"
+                                        ? "border-red-400"
+                                        : "border-reach-plum/15"
                                         }`}
                                 />
 
@@ -249,8 +255,8 @@ function SignupPage() {
                                         onChange={handleChange}
                                         placeholder="Create a password"
                                         className={`w-full rounded-lg border bg-white px-3 py-2.5 pr-10 text-sm text-reach-text outline-none transition placeholder:text-reach-text/30 focus:border-reach-plum/50 ${errors.password
-                                                ? "border-red-400"
-                                                : "border-reach-plum/15"
+                                            ? "border-red-400"
+                                            : "border-reach-plum/15"
                                             }`}
                                     />
 
@@ -285,8 +291,8 @@ function SignupPage() {
                                                     <div
                                                         key={requirement.label}
                                                         className={`flex items-center gap-2 text-[11px] ${requirement.valid
-                                                                ? "text-green-600"
-                                                                : "text-red-500"
+                                                            ? "text-green-600"
+                                                            : "text-red-500"
                                                             }`}
                                                     >
                                                         {requirement.valid ? (
@@ -335,8 +341,8 @@ function SignupPage() {
                                         onChange={handleChange}
                                         placeholder="Confirm password"
                                         className={`w-full rounded-lg border bg-white px-3 py-2.5 pr-10 text-sm text-reach-text outline-none transition placeholder:text-reach-text/30 focus:border-reach-plum/50 ${errors.confirmPassword
-                                                ? "border-red-400"
-                                                : "border-reach-plum/15"
+                                            ? "border-red-400"
+                                            : "border-reach-plum/15"
                                             }`}
                                     />
 
