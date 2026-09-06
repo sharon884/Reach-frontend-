@@ -3,6 +3,7 @@ import HeroSection from "../components/landing/ HeroSection";
 import CommunityFeed from "../components/landing/CommunityFeed";
 import LifecycleSection from "../components/landing/LifecycleSection";
 import CTASection from "../components/landing/CTASection";
+import Footer from "../components/landing/Footer";
 
 function LandingPage() {
     return (
@@ -12,6 +13,7 @@ function LandingPage() {
             <CommunityFeed />
             <LifecycleSection />
             <CTASection/>
+            <Footer/>
         </main>
     );
 }
