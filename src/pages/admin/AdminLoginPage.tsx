@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { loginSchema } from "../../schemas/auth/login.schema";
 import { adminLogin } from "../../services/admin/auth.service";
 import Button from "../../components/common/Button";
+import axios from "axios";
 
 function AdminLoginPage() {
     const navigate = useNavigate();
@@ -76,11 +77,15 @@ function AdminLoginPage() {
             });
 
             navigate("/admin/users");
-        } catch (error: any) {
-            setLoginError(
-                error.response?.data?.message ||
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                setLoginError(
+                    error.response?.data?.message ||
                     "Unable to login. Please try again.",
-            );
+                );
+            } else {
+                setLoginError("Unable to login. Please try again.");
+            }
         } finally {
             setIsLoggingIn(false);
         }
@@ -139,11 +144,10 @@ function AdminLoginPage() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     placeholder="Enter your email"
-                                    className={`w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-reach-plum ${
-                                        formErrors.email
+                                    className={`w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-reach-plum ${formErrors.email
                                             ? "border-red-500"
                                             : "border-gray-200"
-                                    }`}
+                                        }`}
                                 />
 
                                 {formErrors.email && (
@@ -174,11 +178,10 @@ function AdminLoginPage() {
                                         value={formData.password}
                                         onChange={handleChange}
                                         placeholder="Enter your password"
-                                        className={`w-full rounded-xl border bg-white px-4 py-3 pr-12 text-sm outline-none transition focus:border-reach-plum ${
-                                            formErrors.password
+                                        className={`w-full rounded-xl border bg-white px-4 py-3 pr-12 text-sm outline-none transition focus:border-reach-plum ${formErrors.password
                                                 ? "border-red-500"
                                                 : "border-gray-200"
-                                        }`}
+                                            }`}
                                     />
 
                                     <button
