@@ -68,3 +68,9 @@ export async function login(
 ): Promise<void> {
     await api.post("/auth/login", data);
 }
+
+
+//Logout
+export async function logout(): Promise<void> {
+    await api.post("/auth/logout");
+}
