@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@theme {
+    --color-reach-beige: #ebe1d4;
+    --color-reach-surface: #f6f3f2;
+    --color-reach-card: #fcf9f8;
+    --color-reach-text: #1e1e1e;
+    --color-reach-plum: #4a174f;
+}
