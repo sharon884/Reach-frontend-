@@ -7,6 +7,7 @@ import FormField from "../components/molecules/FormField";
 import PasswordField from "../components/molecules/PasswordField";
 import { loginSchema } from "../schemas/auth/login.schema";
 import { login } from "../services/auth/auth.service";
+import AuthTemplate from "../components/templates/AuthTemplate";
 
 function LoginPage() {
     const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -92,141 +93,89 @@ function LoginPage() {
         }
     };
 
-    return (
-        <div className="min-h-screen bg-reach-surface">
-            <main className="px-5 py-10 md:py-16">
-                <div className="mx-auto max-w-md">
-                    {/* Heading */}
-                    <div className="text-center">
-                        <Link
-                            to="/"
-                            className="text-2xl font-bold text-reach-plum"
-                        >
-                            Reach
-                        </Link>
+ return (
+    <AuthTemplate
+        title="Welcome back"
+        description={
+            <>
+                Sign in to discover what your community needs —
+                <br />
+                and what you can offer.
+            </>
+        }
+        backLink={{
+            label: "← Back to Reach",
+            to: "/",
+        }}
+    >
+        <form
+            className="space-y-5"
+            onSubmit={handleSubmit}
+        >
+            <FormField
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+                error={formErrors.email}
+            />
 
-                        <h1 className="mt-5 text-2xl font-bold text-reach-text md:text-3xl">
-                            Welcome back
-                        </h1>
+            <div>
+                <div className="mb-2 flex items-center justify-between">
+                    <label
+                        htmlFor="password"
+                        className="text-xs font-medium text-reach-text"
+                    >
+                        Password
+                    </label>
 
-                        <p className="mx-auto mt-2 max-w-sm text-xs leading-5 text-reach-text/60">
-                            Sign in to discover what your community needs —
-                            <br />
-                            and what you can offer.
-                        </p>
-                    </div>
-
-                    {/* Login card */}
-                    <div className="mt-8 rounded-2xl border border-reach-plum/10 bg-reach-card p-6 shadow-sm md:p-8">
-                        <form
-                            className="space-y-5"
-                            onSubmit={handleSubmit}
-                        >
-                            {/* Email */}
-                            <FormField
-                                label="Email"
-                                name="email"
-                                type="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                placeholder="Enter your email"
-                                error={formErrors.email}
-                            />
-
-                            {/* Password */}
-                            <div>
-                                <div className="mb-2 flex items-center justify-between">
-                                    <label
-                                        htmlFor="password"
-                                        className="text-xs font-medium text-reach-text"
-                                    >
-                                        Password
-                                    </label>
-
-                                    <Link
-                                        to="/forgot-password"
-                                        className="text-[10px] font-medium text-reach-plum hover:underline"
-                                    >
-                                        Forgot password?
-                                    </Link>
-                                </div>
-
-                                <PasswordField
-                                    name="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    placeholder="Enter your password"
-                                    error={formErrors.password}
-                                />
-                            </div>
-
-                            {/* Login error */}
-                            {loginError && (
-                                <p className="text-xs text-red-600">
-                                    {loginError}
-                                </p>
-                            )}
-
-                            {/* Login button */}
-                            <Button
-                                type="submit"
-                                className="w-full"
-                                disabled={isLoggingIn}
-                            >
-                                {isLoggingIn
-                                    ? "Logging in..."
-                                    : "Log in →"}
-                            </Button>
-
-                            {/* Signup */}
-                            <p className="text-center text-[10px] text-reach-text/50">
-                                Don't have an account?{" "}
-                                <Link
-                                    to="/signup"
-                                    className="font-medium text-reach-plum hover:underline"
-                                >
-                                    Sign up
-                                </Link>
-                            </p>
-                        </form>
-                    </div>
-
-                    {/* Back */}
-                    <div className="mt-6 text-center">
-                        <Link
-                            to="/"
-                            className="text-[10px] text-reach-text/60 transition hover:text-reach-plum"
-                        >
-                            ← Back to Reach
-                        </Link>
-                    </div>
+                    <Link
+                        to="/forgot-password"
+                        className="text-[10px] font-medium text-reach-plum hover:underline"
+                    >
+                        Forgot password?
+                    </Link>
                 </div>
-            </main>
 
-            {/* Footer */}
-            <footer className="border-t border-reach-plum/10 bg-reach-card">
-                <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 text-[9px] text-reach-text/50 md:px-8">
-                    <p>© 2026 Reach. All rights reserved.</p>
+                <PasswordField
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Enter your password"
+                    error={formErrors.password}
+                />
+            </div>
 
-                    <div className="flex gap-4">
-                        <a
-                            href="#"
-                            className="transition hover:text-reach-plum"
-                        >
-                            Privacy
-                        </a>
+            {loginError && (
+                <p className="text-xs text-red-600">
+                    {loginError}
+                </p>
+            )}
 
-                        <a
-                            href="#"
-                            className="transition hover:text-reach-plum"
-                        >
-                            Terms
-                        </a>
-                    </div>
-                </div>
-            </footer>
-        </div>
-    );
+            <Button
+                type="submit"
+                className="w-full"
+                disabled={isLoggingIn}
+            >
+                {isLoggingIn
+                    ? "Logging in..."
+                    : "Log in →"}
+            </Button>
+
+            <p className="text-center text-[10px] text-reach-text/50">
+                Don't have an account?{" "}
+                <Link
+                    to="/signup"
+                    className="font-medium text-reach-plum hover:underline"
+                >
+                    Sign up
+                </Link>
+            </p>
+        </form>
+    </AuthTemplate>
+);
 }
 
 export default LoginPage;
