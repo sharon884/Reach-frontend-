@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
-import Button from "../components/common/Button";
+import Button from "../components/atoms/Button";
 import { loginSchema } from "../schemas/auth/login.schema";
 import { login } from "../services/auth/auth.service";
 import axios from "axios";

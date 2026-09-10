@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import Button from "../components/common/Button";
+import Button from "../components/atoms/Button";
 import { verifyOtp, resendOtp } from "../services/auth/auth.service";
 import { verifyOtpSchema } from "../schemas/auth/verify-otp.schema";
 

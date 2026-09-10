@@ -3,7 +3,7 @@ import { Check, Eye, EyeOff, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { signup } from "../services/auth/auth.service";
-import Button from "../components/common/Button";
+import Button from "../components/atoms/Button";
 import { signupSchema } from "../schemas/auth/signup.schema";
 
 function SignupPage() {
