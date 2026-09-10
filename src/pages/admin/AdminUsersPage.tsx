@@ -5,8 +5,9 @@ import {
     updateUserStatus,
     type AdminUser,
 } from "../../services/admin/user.service";
-import AdminUsersTable from "../../components/admin/AdminUsersTable";
-import AdminUsersControls from "../../components/admin/AdminUsersControls";
+import AdminUsersTable from "../../components/organisms/AdminUsersTable";
+import AdminUsersControls from "../../components/organisms/AdminUsersControls";
+import AdminPagination from "../../components/organisms/AdminPagination";
 
 export default function AdminUsersPage() {
     const [users, setUsers] = useState<AdminUser[]>([]);
@@ -164,37 +165,11 @@ export default function AdminUsersPage() {
             />
 
             {/* Pagination */}
-            <div className="mt-6 flex items-center gap-4">
-                <button
-                    disabled={page === 1}
-                    onClick={() =>
-                        setPage(
-                            (current) =>
-                                current - 1,
-                        )
-                    }
-                    className="rounded-lg border border-gray-300 px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                    Previous
-                </button>
-
-                <span className="text-reach-text">
-                    Page {page} of {totalPages}
-                </span>
-
-                <button
-                    disabled={page === totalPages}
-                    onClick={() =>
-                        setPage(
-                            (current) =>
-                                current + 1,
-                        )
-                    }
-                    className="rounded-lg border border-gray-300 px-4 py-2 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                    Next
-                </button>
-            </div>
+            <AdminPagination
+                page={page}
+                totalPages={totalPages}
+                onPageChange={setPage}
+            />
         </div>
     );
 }
