@@ -7,6 +7,7 @@ import FormField from "../components/molecules/FormField";
 import PasswordField from "../components/molecules/PasswordField";
 import PasswordRequirements from "../components/molecules/PasswordRequirements";
 import { signupSchema } from "../schemas/auth/signup.schema";
+import AuthTemplate from "../components/templates/AuthTemplate";
 
 function SignupPage() {
     const [formData, setFormData] = useState({
@@ -110,204 +111,131 @@ function SignupPage() {
         },
     ];
 
-    const isPasswordValid =
-        formData.password.length > 0 &&
-        passwordRequirements.every(
-            (requirement) => requirement.valid,
-        );
 
     return (
-        <div className="min-h-screen bg-reach-surface">
-            {/* Top bar */}
-            <header className="border-b border-reach-plum/10 bg-reach-card">
-                <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 text-[10px] text-reach-text/50 md:px-8">
-                    <p>© 2026 Reach. All rights reserved.</p>
+    <AuthTemplate
+        title="Create your Reach account"
+        description="Join the neighborhood network built around sharing, helping, and real-world community action."
+        backLink={{
+            label: "← Back to Reach",
+            to: "/",
+        }}
+    >
+        <form
+            onSubmit={handleSubmit}
+            className="space-y-5"
+        >
+            <FormField
+                label="Full name"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                placeholder="Enter your full name"
+                error={errors.fullName}
+            />
 
-                    <div className="flex gap-4">
+            <FormField
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+                error={errors.email}
+            />
+
+            <div>
+                <label
+                    htmlFor="password"
+                    className="mb-2 block text-xs font-medium text-reach-text"
+                >
+                    Password
+                </label>
+
+                <PasswordField
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Create a password"
+                    error={errors.password}
+                />
+
+                <PasswordRequirements
+                    requirements={passwordRequirements}
+                />
+            </div>
+
+            <div>
+                <label
+                    htmlFor="confirmPassword"
+                    className="mb-2 block text-xs font-medium text-reach-text"
+                >
+                    Confirm password
+                </label>
+
+                <PasswordField
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    placeholder="Confirm your password"
+                    error={errors.confirmPassword}
+                />
+            </div>
+
+            <div>
+                <label className="flex items-start gap-2 text-xs text-reach-text/70">
+                    <input
+                        type="checkbox"
+                        name="termsAccepted"
+                        checked={formData.termsAccepted}
+                        onChange={handleChange}
+                        className="mt-0.5"
+                    />
+
+                    <span>
+                        I agree to the{" "}
                         <a
                             href="#"
-                            className="transition hover:text-reach-plum"
+                            className="font-medium text-reach-plum hover:underline"
                         >
-                            Privacy
-                        </a>
-
+                            Terms of Service
+                        </a>{" "}
+                        and{" "}
                         <a
                             href="#"
-                            className="transition hover:text-reach-plum"
+                            className="font-medium text-reach-plum hover:underline"
                         >
-                            Terms
+                            Privacy Policy
                         </a>
-                    </div>
-                </div>
-            </header>
+                    </span>
+                </label>
 
-            {/* Signup content */}
-            <main className="px-5 py-10 md:py-16">
-                <div className="mx-auto max-w-md">
-                    {/* Heading */}
-                    <div className="text-center">
-                        <Link
-                            to="/"
-                            className="text-2xl font-bold text-reach-plum"
-                        >
-                            Reach
-                        </Link>
+                {errors.termsAccepted && (
+                    <p className="mt-2 text-xs text-red-600">
+                        {errors.termsAccepted}
+                    </p>
+                )}
+            </div>
 
-                        <h1 className="mt-5 text-2xl font-bold text-reach-text md:text-3xl">
-                            Create your Reach account
-                        </h1>
+            <Button
+                type="submit"
+                className="w-full"
+            >
+                Create account →
+            </Button>
 
-                        <p className="mx-auto mt-2 max-w-sm text-xs leading-5 text-reach-text/60">
-                            Join the neighborhood network built around
-                            sharing, helping, and real-world community action.
-                        </p>
-                    </div>
-
-                    {/* Form card */}
-                    <div className="mt-8 rounded-2xl border border-reach-plum/10 bg-reach-card p-6 shadow-sm md:p-8">
-                        <form
-                            className="space-y-5"
-                            onSubmit={handleSubmit}
-                        >
-                            {/* Full name */}
-                            <FormField
-                                label="Full name"
-                                name="fullName"
-                                type="text"
-                                value={formData.fullName}
-                                onChange={handleChange}
-                                placeholder="e.g. Jane Doe"
-                                error={errors.fullName}
-                            />
-
-                            {/* Email */}
-                            <FormField
-                                label="Email address"
-                                name="email"
-                                type="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                placeholder="jane@example.com"
-                                error={errors.email}
-                            />
-
-                            {/* Password */}
-                            <div>
-                                <label
-                                    htmlFor="password"
-                                    className="mb-2 block text-xs font-medium text-reach-text"
-                                >
-                                    Password
-                                </label>
-
-                                <PasswordField
-                                    name="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    placeholder="Create a password"
-                                    className="py-2.5 text-sm"
-                                    error={errors.password}
-                                />
-
-                                {formData.password.length > 0 &&
-                                    !isPasswordValid && (
-                                        <PasswordRequirements
-                                            requirements={passwordRequirements}
-                                        />
-                                    )}
-                            </div>
-
-                            {/* Confirm password */}
-                            <div>
-                                <label
-                                    htmlFor="confirmPassword"
-                                    className="mb-2 block text-xs font-medium text-reach-text"
-                                >
-                                    Confirm password
-                                </label>
-
-                                <PasswordField
-                                    name="confirmPassword"
-                                    value={formData.confirmPassword}
-                                    onChange={handleChange}
-                                    placeholder="Confirm password"
-                                    className="py-2.5 text-sm"
-                                    error={errors.confirmPassword}
-                                />
-                            </div>
-
-                            {/* Terms */}
-                            <div>
-                                <label className="flex items-start gap-2 text-[10px] leading-4 text-reach-text/60">
-                                    <input
-                                        id="termsAccepted"
-                                        name="termsAccepted"
-                                        type="checkbox"
-                                        checked={formData.termsAccepted}
-                                        onChange={handleChange}
-                                        className="mt-0.5 accent-reach-plum"
-                                    />
-
-                                    <span>
-                                        I agree to{" "}
-                                        <a
-                                            href="#"
-                                            className="font-medium text-reach-plum"
-                                        >
-                                            Terms of Service
-                                        </a>{" "}
-                                        and{" "}
-                                        <a
-                                            href="#"
-                                            className="font-medium text-reach-plum"
-                                        >
-                                            Privacy Policy
-                                        </a>
-                                        .
-                                    </span>
-                                </label>
-
-                                {errors.termsAccepted && (
-                                    <p className="mt-1.5 text-xs text-red-600">
-                                        {errors.termsAccepted}
-                                    </p>
-                                )}
-                            </div>
-
-                            {/* Submit */}
-                            <Button
-                                type="submit"
-                                className="w-full"
-                            >
-                                Create account
-                            </Button>
-                        </form>
-
-                        {/* Login */}
-                        <p className="mt-5 text-center text-[10px] text-reach-text/50">
-                            Already have an account?{" "}
-                            <Link
-                                to="/login"
-                                className="font-medium text-reach-plum hover:underline"
-                            >
-                                Log in
-                            </Link>
-                        </p>
-                    </div>
-
-                    {/* Back */}
-                    <div className="mt-6 text-center">
-                        <Link
-                            to="/"
-                            className="text-xs text-reach-text/60 transition hover:text-reach-plum"
-                        >
-                            ← Back to Reach
-                        </Link>
-                    </div>
-                </div>
-            </main>
-        </div>
-    );
+            <p className="text-center text-[10px] text-reach-text/50">
+                Already have an account?{" "}
+                <Link
+                    to="/login"
+                    className="font-medium text-reach-plum hover:underline"
+                >
+                    Log in
+                </Link>
+            </p>
+        </form>
+    </AuthTemplate>
+);
 }
 
 export default SignupPage;
