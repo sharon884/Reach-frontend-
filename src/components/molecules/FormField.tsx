@@ -7,6 +7,7 @@ interface FormFieldProps {
     value: string;
     placeholder?: string;
     error?: string;
+    className?: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -17,6 +18,7 @@ function FormField({
     value,
     placeholder,
     error,
+    className = "",
     onChange,
 }: FormFieldProps) {
     return (
@@ -35,6 +37,11 @@ function FormField({
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
+                className={`${className} ${
+                    error
+                        ? "border-red-500"
+                        : ""
+                }`}
             />
 
             {error && (
