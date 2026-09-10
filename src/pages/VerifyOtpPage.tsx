@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import Button from "../components/atoms/Button";
+import OtpInput from "../components/molecules/OtpInput";
 import { verifyOtp, resendOtp } from "../services/auth/auth.service";
 import { verifyOtpSchema } from "../schemas/auth/verify-otp.schema";
 
@@ -179,32 +180,11 @@ function VerifyOtpPage() {
                             onSubmit={handleSubmit}
                         >
                             {/* OTP input */}
-                            <div>
-                                <label
-                                    htmlFor="otp"
-                                    className="mb-2 block text-xs font-medium text-reach-text"
-                                >
-                                    Verification code
-                                </label>
-
-                                <input
-                                    id="otp"
-                                    name="otp"
-                                    type="text"
-                                    inputMode="numeric"
-                                    autoComplete="one-time-code"
-                                    value={otp}
-                                    onChange={handleOtpChange}
-                                    placeholder="Enter 6-digit code"
-                                    maxLength={6}
-                                    className="w-full rounded-lg border border-reach-plum/15 bg-white px-3 py-3 text-center text-lg tracking-[0.4em] text-reach-text outline-none transition placeholder:text-xs placeholder:tracking-normal placeholder:text-reach-text/30 focus:border-reach-plum/50"
-                                />
-                                {otpError && (
-                                    <p className="mt-2 text-xs text-red-600">
-                                        {otpError}
-                                    </p>
-                                )}
-                            </div>
+                            <OtpInput
+                                value={otp}
+                                error={otpError}
+                                onChange={handleOtpChange}
+                            />
 
                             {/* Resend */}
                             <div className="text-center text-[10px] text-reach-text/50">
