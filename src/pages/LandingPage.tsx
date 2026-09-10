@@ -3,7 +3,7 @@ import HeroSection from "../components/organisms/HeroSection";
 import CommunityFeed from "../components/landing/CommunityFeed";
 import LifecycleSection from "../components/organisms/LifecycleSection";
 import CTASection from "../components/organisms/CTASection";
-import Footer from "../components/landing/Footer";
+import Footer from "../components/organisms/Footer";
 
 function LandingPage() {
     return (
