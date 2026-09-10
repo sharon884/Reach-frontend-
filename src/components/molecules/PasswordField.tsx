@@ -8,6 +8,7 @@ interface PasswordFieldProps {
     value: string;
     placeholder?: string;
     error?: string;
+    className?: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -16,6 +17,7 @@ function PasswordField({
     value,
     placeholder,
     error,
+    className = "",
     onChange,
 }: PasswordFieldProps) {
     const [showPassword, setShowPassword] = useState(false);
@@ -24,14 +26,14 @@ function PasswordField({
         <div>
             <div className="relative">
                 <Input
-                    id={name}
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                    type={showPassword ? "text" : "password"}
-                    placeholder={placeholder}
-                    className="pr-10"
-                />
+    id={name}
+    name={name}
+    value={value}
+    onChange={onChange}
+    type={showPassword ? "text" : "password"}
+    placeholder={placeholder}
+    className={`pr-10 ${className}`}
+/>
 
                 <button
                     type="button"

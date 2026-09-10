@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Check, Eye, EyeOff, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { signup } from "../services/auth/auth.service";
+import {signup} from "../services/auth/auth.service";
 import Button from "../components/atoms/Button";
+import FormField from "../components/molecules/FormField";
+import PasswordField from "../components/molecules/PasswordField";
+import PasswordRequirements from "../components/molecules/PasswordRequirements";
 import { signupSchema } from "../schemas/auth/signup.schema";
 
 function SignupPage() {
@@ -17,9 +19,6 @@ function SignupPage() {
 
     const navigate = useNavigate();
     const [errors, setErrors] = useState<Record<string, string>>({});
-
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleChange = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -119,7 +118,6 @@ function SignupPage() {
 
     return (
         <div className="min-h-screen bg-reach-surface">
-
             {/* Top bar */}
             <header className="border-b border-reach-plum/10 bg-reach-card">
                 <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 text-[10px] text-reach-text/50 md:px-8">
@@ -145,9 +143,7 @@ function SignupPage() {
 
             {/* Signup content */}
             <main className="px-5 py-10 md:py-16">
-
                 <div className="mx-auto max-w-md">
-
                     {/* Heading */}
                     <div className="text-center">
                         <Link
@@ -169,69 +165,31 @@ function SignupPage() {
 
                     {/* Form card */}
                     <div className="mt-8 rounded-2xl border border-reach-plum/10 bg-reach-card p-6 shadow-sm md:p-8">
-
                         <form
                             className="space-y-5"
                             onSubmit={handleSubmit}
                         >
-
                             {/* Full name */}
-                            <div>
-                                <label
-                                    htmlFor="fullName"
-                                    className="mb-2 block text-xs font-medium text-reach-text"
-                                >
-                                    Full name
-                                </label>
-
-                                <input
-                                    id="fullName"
-                                    name="fullName"
-                                    type="text"
-                                    value={formData.fullName}
-                                    onChange={handleChange}
-                                    placeholder="e.g. Jane Doe"
-                                    className={`w-full rounded-lg border bg-white px-3 py-2.5 text-sm text-reach-text outline-none transition placeholder:text-reach-text/30 focus:border-reach-plum/50 ${errors.fullName
-                                        ? "border-red-400"
-                                        : "border-reach-plum/15"
-                                        }`}
-                                />
-
-                                {errors.fullName && (
-                                    <p className="mt-1.5 text-xs text-red-600">
-                                        {errors.fullName}
-                                    </p>
-                                )}
-                            </div>
+                            <FormField
+                                label="Full name"
+                                name="fullName"
+                                type="text"
+                                value={formData.fullName}
+                                onChange={handleChange}
+                                placeholder="e.g. Jane Doe"
+                                error={errors.fullName}
+                            />
 
                             {/* Email */}
-                            <div>
-                                <label
-                                    htmlFor="email"
-                                    className="mb-2 block text-xs font-medium text-reach-text"
-                                >
-                                    Email address
-                                </label>
-
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    placeholder="jane@example.com"
-                                    className={`w-full rounded-lg border bg-white px-3 py-2.5 text-sm text-reach-text outline-none transition placeholder:text-reach-text/30 focus:border-reach-plum/50 ${errors.email
-                                        ? "border-red-400"
-                                        : "border-reach-plum/15"
-                                        }`}
-                                />
-
-                                {errors.email && (
-                                    <p className="mt-1.5 text-xs text-red-600">
-                                        {errors.email}
-                                    </p>
-                                )}
-                            </div>
+                            <FormField
+                                label="Email address"
+                                name="email"
+                                type="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                placeholder="jane@example.com"
+                                error={errors.email}
+                            />
 
                             {/* Password */}
                             <div>
@@ -242,81 +200,21 @@ function SignupPage() {
                                     Password
                                 </label>
 
-                                <div className="relative">
-                                    <input
-                                        id="password"
-                                        name="password"
-                                        type={
-                                            showPassword
-                                                ? "text"
-                                                : "password"
-                                        }
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                        placeholder="Create a password"
-                                        className={`w-full rounded-lg border bg-white px-3 py-2.5 pr-10 text-sm text-reach-text outline-none transition placeholder:text-reach-text/30 focus:border-reach-plum/50 ${errors.password
-                                            ? "border-red-400"
-                                            : "border-reach-plum/15"
-                                            }`}
-                                    />
+                                <PasswordField
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    placeholder="Create a password"
+                                    className="py-2.5 text-sm"
+                                    error={errors.password}
+                                />
 
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            setShowPassword(
-                                                (previous) => !previous,
-                                            )
-                                        }
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-reach-text/40 transition hover:text-reach-plum"
-                                        aria-label={
-                                            showPassword
-                                                ? "Hide password"
-                                                : "Show password"
-                                        }
-                                    >
-                                        {showPassword ? (
-                                            <EyeOff size={16} />
-                                        ) : (
-                                            <Eye size={16} />
-                                        )}
-                                    </button>
-                                </div>
-
-                                {/* Password requirements */}
                                 {formData.password.length > 0 &&
                                     !isPasswordValid && (
-                                        <div className="mt-3 space-y-1.5">
-                                            {passwordRequirements.map(
-                                                (requirement) => (
-                                                    <div
-                                                        key={requirement.label}
-                                                        className={`flex items-center gap-2 text-[11px] ${requirement.valid
-                                                            ? "text-green-600"
-                                                            : "text-red-500"
-                                                            }`}
-                                                    >
-                                                        {requirement.valid ? (
-                                                            <Check size={13} />
-                                                        ) : (
-                                                            <X size={13} />
-                                                        )}
-
-                                                        <span>
-                                                            {
-                                                                requirement.label
-                                                            }
-                                                        </span>
-                                                    </div>
-                                                ),
-                                            )}
-                                        </div>
+                                        <PasswordRequirements
+                                            requirements={passwordRequirements}
+                                        />
                                     )}
-
-                                {errors.password && (
-                                    <p className="mt-2 text-xs text-red-600">
-                                        {errors.password}
-                                    </p>
-                                )}
                             </div>
 
                             {/* Confirm password */}
@@ -328,51 +226,14 @@ function SignupPage() {
                                     Confirm password
                                 </label>
 
-                                <div className="relative">
-                                    <input
-                                        id="confirmPassword"
-                                        name="confirmPassword"
-                                        type={
-                                            showConfirmPassword
-                                                ? "text"
-                                                : "password"
-                                        }
-                                        value={formData.confirmPassword}
-                                        onChange={handleChange}
-                                        placeholder="Confirm password"
-                                        className={`w-full rounded-lg border bg-white px-3 py-2.5 pr-10 text-sm text-reach-text outline-none transition placeholder:text-reach-text/30 focus:border-reach-plum/50 ${errors.confirmPassword
-                                            ? "border-red-400"
-                                            : "border-reach-plum/15"
-                                            }`}
-                                    />
-
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            setShowConfirmPassword(
-                                                (previous) => !previous,
-                                            )
-                                        }
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-reach-text/40 transition hover:text-reach-plum"
-                                        aria-label={
-                                            showConfirmPassword
-                                                ? "Hide confirm password"
-                                                : "Show confirm password"
-                                        }
-                                    >
-                                        {showConfirmPassword ? (
-                                            <EyeOff size={16} />
-                                        ) : (
-                                            <Eye size={16} />
-                                        )}
-                                    </button>
-                                </div>
-
-                                {errors.confirmPassword && (
-                                    <p className="mt-1.5 text-xs text-red-600">
-                                        {errors.confirmPassword}
-                                    </p>
-                                )}
+                                <PasswordField
+                                    name="confirmPassword"
+                                    value={formData.confirmPassword}
+                                    onChange={handleChange}
+                                    placeholder="Confirm password"
+                                    className="py-2.5 text-sm"
+                                    error={errors.confirmPassword}
+                                />
                             </div>
 
                             {/* Terms */}
@@ -388,7 +249,7 @@ function SignupPage() {
                                     />
 
                                     <span>
-                                        I agree to the{" "}
+                                        I agree to{" "}
                                         <a
                                             href="#"
                                             className="font-medium text-reach-plum"
@@ -420,7 +281,6 @@ function SignupPage() {
                             >
                                 Create account
                             </Button>
-
                         </form>
 
                         {/* Login */}
@@ -444,7 +304,6 @@ function SignupPage() {
                             ← Back to Reach
                         </Link>
                     </div>
-
                 </div>
             </main>
         </div>
