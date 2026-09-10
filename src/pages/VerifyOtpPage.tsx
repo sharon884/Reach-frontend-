@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import Button from "../components/atoms/Button";
 import OtpInput from "../components/molecules/OtpInput";
+import AuthTemplate from "../components/templates/AuthTemplate";
 import { verifyOtp, resendOtp } from "../services/auth/auth.service";
 import { verifyOtpSchema } from "../schemas/auth/verify-otp.schema";
 
@@ -122,109 +123,57 @@ function VerifyOtpPage() {
         }
     };
 
-    return (
-        <div className="min-h-screen bg-reach-surface">
+return (
+    <AuthTemplate
+        title="Verify your email"
+        description={
+            <>
+                Enter the 6-digit verification code sent to{" "}
+                <span className="font-medium text-reach-plum">
+                    {email}
+                </span>
+            </>
+        }
+        backLink={{
+            label: "← Back to Reach",
+            to: "/",
+        }}
+    >
+        <form
+            onSubmit={handleSubmit}
+            className="space-y-5"
+        >
+            <OtpInput
+                value={otp}
+                error={otpError}
+                onChange={handleOtpChange}
+            />
 
-            {/* Top bar */}
-            <header className="border-b border-reach-plum/10 bg-reach-card">
-                <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 text-[10px] text-reach-text/50 md:px-8">
-                    <p>© 2026 Reach. All rights reserved.</p>
+            <div className="text-center">
+                <button
+                    type="button"
+                    onClick={handleResendOtp}
+                    disabled={resendCooldown > 0}
+                    className="text-xs font-medium text-reach-plum disabled:cursor-not-allowed disabled:text-reach-text/30"
+                >
+                    {resendCooldown > 0
+                        ? `Resend OTP in ${resendCooldown}s`
+                        : "Resend OTP"}
+                </button>
+            </div>
 
-                    <div className="flex gap-4">
-                        <a
-                            href="#"
-                            className="transition hover:text-reach-plum"
-                        >
-                            Privacy
-                        </a>
-
-                        <a
-                            href="#"
-                            className="transition hover:text-reach-plum"
-                        >
-                            Terms
-                        </a>
-                    </div>
-                </div>
-            </header>
-
-            {/* OTP content */}
-            <main className="px-5 py-10 md:py-16">
-                <div className="mx-auto max-w-md">
-
-                    {/* Heading */}
-                    <div className="text-center">
-                        <Link
-                            to="/"
-                            className="text-2xl font-bold text-reach-plum"
-                        >
-                            Reach
-                        </Link>
-
-                        <h1 className="mt-5 text-2xl font-bold text-reach-text md:text-3xl">
-                            Verify your email
-                        </h1>
-
-                        <p className="mx-auto mt-2 max-w-sm text-xs leading-5 text-reach-text/60">
-                            We sent a 6-digit verification code to
-                            <span className="font-medium text-reach-text">
-                                {email}
-                            </span>
-                        </p>
-                    </div>
-
-                    {/* OTP card */}
-                    <div className="mt-8 rounded-2xl border border-reach-plum/10 bg-reach-card p-6 shadow-sm md:p-8">
-                        <form
-                            className="space-y-6"
-                            onSubmit={handleSubmit}
-                        >
-                            {/* OTP input */}
-                            <OtpInput
-                                value={otp}
-                                error={otpError}
-                                onChange={handleOtpChange}
-                            />
-
-                            {/* Resend */}
-                            <div className="text-center text-[10px] text-reach-text/50">
-                                Didn't receive the code?{" "}
-                                <button
-                                    type="button"
-                                    onClick={handleResendOtp}
-                                    disabled={resendCooldown > 0}
-                                    className="font-medium text-reach-plum hover:underline disabled:cursor-not-allowed disabled:opacity-50"
-                                >
-                                    {resendCooldown > 0
-                                        ? `Resend OTP in ${resendCooldown}s`
-                                        : "Resend OTP"}
-                                </button>
-                            </div>
-
-                            {/* Verify */}
-                            <Button
-                                type="submit"
-                                className="w-full"
-                                disabled={isVerifying}
-                            >
-                                {isVerifying ? "Verifying..." : "Verify email"}
-                            </Button>
-                        </form>
-
-                        {/* Back to signup */}
-                        <p className="mt-5 text-center text-[10px] text-reach-text/50">
-                            <Link
-                                to="/signup"
-                                className="font-medium text-reach-plum hover:underline"
-                            >
-                                ← Back to signup
-                            </Link>
-                        </p>
-                    </div>
-                </div>
-            </main>
-        </div>
-    );
+            <Button
+                type="submit"
+                className="w-full"
+                disabled={isVerifying}
+            >
+                {isVerifying
+                    ? "Verifying..."
+                    : "Verify email →"}
+            </Button>
+        </form>
+    </AuthTemplate>
+);
 }
 
 export default VerifyOtpPage;
