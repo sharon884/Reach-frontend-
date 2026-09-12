@@ -1,9 +1,9 @@
-import Navbar from "../components/layout/Navbar";
-import HeroSection from "../components/landing/ HeroSection";
-import CommunityFeed from "../components/landing/CommunityFeed";
-import LifecycleSection from "../components/landing/LifecycleSection";
-import CTASection from "../components/landing/CTASection";
-import Footer from "../components/landing/Footer";
+import Navbar from "../components/organisms/Navbar";
+import HeroSection from "../components/organisms/HeroSection";
+import CommunityFeed from "../components/organisms/CommunityFeed";
+import LifecycleSection from "../components/organisms/LifecycleSection";
+import CTASection from "../components/organisms/CTASection";
+import Footer from "../components/organisms/Footer";
 
 function LandingPage() {
     return (

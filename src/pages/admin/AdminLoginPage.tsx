@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import FormField from "../../components/molecules/FormField";
+import PasswordField from "../../components/molecules/PasswordField";
 import { useNavigate } from "react-router-dom";
 import { loginSchema } from "../../schemas/auth/login.schema";
 import { adminLogin } from "../../services/admin/auth.service";
-import Button from "../../components/common/Button";
+import Button from "../../components/atoms/Button";
 import axios from "axios";
 
 function AdminLoginPage() {
@@ -21,7 +22,7 @@ function AdminLoginPage() {
 
     const [loginError, setLoginError] = useState("");
     const [isLoggingIn, setIsLoggingIn] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
+
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement>,
@@ -129,33 +130,16 @@ function AdminLoginPage() {
                             className="space-y-5"
                         >
                             {/* Email */}
-                            <div>
-                                <label
-                                    htmlFor="email"
-                                    className="mb-2 block text-sm font-medium"
-                                >
-                                    Email
-                                </label>
-
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    placeholder="Enter your email"
-                                    className={`w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-reach-plum ${formErrors.email
-                                            ? "border-red-500"
-                                            : "border-gray-200"
-                                        }`}
-                                />
-
-                                {formErrors.email && (
-                                    <p className="mt-1.5 text-xs text-red-500">
-                                        {formErrors.email}
-                                    </p>
-                                )}
-                            </div>
+                            <FormField
+                                label="Email"
+                                name="email"
+                                type="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                placeholder="Enter your email"
+                                error={formErrors.email}
+                                className="rounded-xl border-gray-200 px-4 py-3 text-sm"
+                            />
 
                             {/* Password */}
                             <div>
@@ -166,51 +150,14 @@ function AdminLoginPage() {
                                     Password
                                 </label>
 
-                                <div className="relative">
-                                    <input
-                                        id="password"
-                                        name="password"
-                                        type={
-                                            showPassword
-                                                ? "text"
-                                                : "password"
-                                        }
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                        placeholder="Enter your password"
-                                        className={`w-full rounded-xl border bg-white px-4 py-3 pr-12 text-sm outline-none transition focus:border-reach-plum ${formErrors.password
-                                                ? "border-red-500"
-                                                : "border-gray-200"
-                                            }`}
-                                    />
-
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            setShowPassword(
-                                                (prev) => !prev,
-                                            )
-                                        }
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-reach-plum"
-                                        aria-label={
-                                            showPassword
-                                                ? "Hide password"
-                                                : "Show password"
-                                        }
-                                    >
-                                        {showPassword ? (
-                                            <EyeOff size={18} />
-                                        ) : (
-                                            <Eye size={18} />
-                                        )}
-                                    </button>
-                                </div>
-
-                                {formErrors.password && (
-                                    <p className="mt-1.5 text-xs text-red-500">
-                                        {formErrors.password}
-                                    </p>
-                                )}
+                                <PasswordField
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    placeholder="Enter your password"
+                                    error={formErrors.password}
+                                    className="rounded-xl border-gray-200 px-4 py-3 pr-12 text-sm"
+                                />
                             </div>
 
                             {/* Login Error */}
