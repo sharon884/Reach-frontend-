@@ -74,3 +74,15 @@ export async function login(
 export async function logout(): Promise<void> {
     await api.post("/auth/logout");
 }
+
+
+//Google  auth 
+export interface GoogleLoginRequest {
+    credential: string;
+}
+
+export async function googleLogin(
+    data: GoogleLoginRequest,
+): Promise<void> {
+    await api.post("/auth/google", data);
+}
