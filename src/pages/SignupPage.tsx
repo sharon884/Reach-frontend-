@@ -4,17 +4,17 @@ import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import { signup, googleLogin } from "../services/auth/auth.service";
+import { signup, googleLogin } from "@/services/auth/auth.service";
 
-import Button from "../components/atoms/Button";
-import FormField from "../components/molecules/FormField";
-import PasswordField from "../components/molecules/PasswordField";
-import PasswordRequirements from "../components/molecules/PasswordRequirements";
-import GoogleSignInButton from "../components/molecules/GoogleSignInButton";
+import Button from "@/components/atoms/Button";
+import FormField from "@/components/molecules/FormField";
+import PasswordField from "@/components/molecules/PasswordField";
+import PasswordRequirements from "@/components/molecules/PasswordRequirements";
+import GoogleSignInButton from "@/components/molecules/GoogleSignInButton";
 
-import { signupSchema } from "../schemas/auth/signup.schema";
+import { signupSchema } from "@/schemas/auth/signup.schema";
 
-import AuthTemplate from "../components/templates/AuthTemplate";
+import AuthTemplate from "@/components/templates/AuthTemplate";
 
 
 function SignupPage() {

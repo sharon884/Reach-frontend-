@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 
-import AdminRoutes from "./AdminRoutes";
-import LandingPage from "../pages/LandingPage";
-import SignupPage from "../pages/SignupPage";
-import VerifyOtpPage from "../pages/VerifyOtpPage";
-import LoginPage from "../pages/LoginPage";
-import FeedPage from "../pages/FeedPage";
+import AdminRoutes from "@/routes/AdminRoutes";
+import LandingPage from "@/pages/LandingPage";
+import SignupPage from "@/pages/SignupPage";
+import VerifyOtpPage from "@/pages/VerifyOtpPage";
+import LoginPage from "@/pages/LoginPage";
+import FeedPage from "@/pages/FeedPage";
 
 function AppRoutes() {
     return (

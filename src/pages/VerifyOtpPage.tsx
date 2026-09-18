@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import Button from "../components/atoms/Button";
-import OtpInput from "../components/molecules/OtpInput";
-import AuthTemplate from "../components/templates/AuthTemplate";
-import { verifyOtp, resendOtp } from "../services/auth/auth.service";
-import { verifyOtpSchema } from "../schemas/auth/verify-otp.schema";
+import Button from "@/components/atoms/Button";
+import OtpInput from "@/components/molecules/OtpInput";
+import AuthTemplate from "@/components/templates/AuthTemplate";
+import { verifyOtp, resendOtp } from "@/services/auth/auth.service";
+import { verifyOtpSchema } from "@/schemas/auth/verify-otp.schema";
 
 function VerifyOtpPage() {
 

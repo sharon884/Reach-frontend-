@@ -1,4 +1,4 @@
-import Button from "../atoms/Button";
+import Button from "@/components/atoms/Button";
 
 function HeroSection() {
     return (

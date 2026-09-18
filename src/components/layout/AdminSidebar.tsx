@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { adminLogout } from "../../services/admin/auth.service";
+import { adminLogout } from "@/services/admin/auth.service";
 
 export default function AdminSidebar() {
 

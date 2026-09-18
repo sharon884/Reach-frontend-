@@ -4,16 +4,16 @@ import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import Button from "../components/atoms/Button";
-import FormField from "../components/molecules/FormField";
-import PasswordField from "../components/molecules/PasswordField";
-import GoogleSignInButton from "../components/molecules/GoogleSignInButton";
+import Button from "@/components/atoms/Button";
+import FormField from "@/components/molecules/FormField";
+import PasswordField from "@/components/molecules/PasswordField";
+import GoogleSignInButton from "@/components/molecules/GoogleSignInButton";
 
-import { login, googleLogin } from "../services/auth/auth.service";
+import { login, googleLogin } from "@/services/auth/auth.service";
 
-import { loginSchema } from "../schemas/auth/login.schema";
+import { loginSchema } from "@/schemas/auth/login.schema";
 
-import AuthTemplate from "../components/templates/AuthTemplate";
+import AuthTemplate from "@/components/templates/AuthTemplate";
 
 
 function LoginPage() {

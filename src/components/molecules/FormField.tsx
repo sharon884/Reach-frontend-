@@ -1,4 +1,4 @@
-import Input from "../atoms/Input";
+import Input from "@/components/atoms/Input";
 
 interface FormFieldProps {
     label: string;

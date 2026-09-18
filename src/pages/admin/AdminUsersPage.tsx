@@ -4,10 +4,10 @@ import {
     getUsers,
     updateUserStatus,
     type AdminUser,
-} from "../../services/admin/user.service";
-import AdminUsersTable from "../../components/organisms/AdminUsersTable";
-import AdminUsersControls from "../../components/organisms/AdminUsersControls";
-import AdminPagination from "../../components/organisms/AdminPagination";
+} from "@/services/admin/user.service";
+import AdminUsersTable from "@/components/organisms/AdminUsersTable";
+import AdminUsersControls from "@/components/organisms/AdminUsersControls";
+import AdminPagination from "@/components/organisms/AdminPagination";
 
 export default function AdminUsersPage() {
     const [users, setUsers] = useState<AdminUser[]>([]);
