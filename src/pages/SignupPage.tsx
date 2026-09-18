@@ -1,277 +1,39 @@
-import { useState } from "react";
-
-import { Link, useNavigate } from "react-router-dom";
-
-import axios from "axios";
-
-import { signup, googleLogin } from "@/features/auth/services/auth.service";
-import { signupSchema } from "@/features/auth/schemas/signup.schema";
+import { Link } from "react-router-dom";
 
 import Button from "@/components/atoms/Button/Button";
 import FormField from "@/components/molecules/FormField/FormField";
 import PasswordField from "@/components/molecules/PasswordField/PasswordField";
 import PasswordRequirements from "@/components/molecules/PasswordRequirements/PasswordRequirements";
 import GoogleSignInButton from "@/components/molecules/GoogleSignInButton/GoogleSignInButton";
-
-
 import AuthTemplate from "@/components/templates/AuthTemplate";
 
+import { useSignup } from "@/features/auth/hooks/useSignup";
 
 function SignupPage() {
-
-    const [formData, setFormData] = useState({
-        fullName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        termsAccepted: false,
-    });
-
-    const [isGoogleSigningUp, setIsGoogleSigningUp] =
-        useState(false);
-
-    const navigate = useNavigate();
-
-    const [errors, setErrors] =
-        useState<Record<string, string>>({});
-
-
-    const handleChange = (
-        event: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-
-        const {
-            name,
-            value,
-            type,
-            checked,
-        } = event.target;
-
-
-        setFormData((previous) => ({
-            ...previous,
-            [name]:
-                type === "checkbox"
-                    ? checked
-                    : value,
-        }));
-
-
-        setErrors((previous) => {
-
-            if (!previous[name]) {
-                return previous;
-            }
-
-
-            const updatedErrors = {
-                ...previous,
-            };
-
-
-            delete updatedErrors[name];
-
-
-            return updatedErrors;
-        });
-
-    };
-
-
-    const handleSubmit = async (
-        event: React.FormEvent<HTMLFormElement>,
-    ) => {
-
-        event.preventDefault();
-
-
-        const result =
-            signupSchema.safeParse(formData);
-
-
-        if (!result.success) {
-
-            const validationErrors:
-                Record<string, string> = {};
-
-
-            result.error.issues.forEach((issue) => {
-
-                const field = issue.path[0];
-
-
-                if (
-                    typeof field === "string" &&
-                    !validationErrors[field]
-                ) {
-
-                    validationErrors[field] =
-                        issue.message;
-
-                }
-
-            });
-
-
-            setErrors(validationErrors);
-
-            return;
-        }
-
-
-        setErrors({});
-
-
-        try {
-
-            const response = await signup({
-                fullName: result.data.fullName,
-                email: result.data.email,
-                password: result.data.password,
-            });
-
-
-            navigate("/verify-otp", {
-                state: {
-                    userId: response.id,
-                    email: response.email,
-                },
-            });
-
-        } catch (error) {
-
-            console.error(
-                "Signup failed:",
-                error,
-            );
-
-
-            if (axios.isAxiosError(error)) {
-
-                setErrors({
-                    signup:
-                        error.response?.data?.message ||
-                        "Unable to create your account. Please try again.",
-                });
-
-                return;
-            }
-
-
-            setErrors({
-                signup:
-                    "Something went wrong. Please try again.",
-            });
-
-        }
-
-    };
-
-
-    const handleGoogleCredential = async (
-        credential: string,
-    ) => {
-
-        try {
-
-            setIsGoogleSigningUp(true);
-
-            setErrors({});
-
-
-            await googleLogin({
-                credential,
-            });
-
-
-            navigate("/feed");
-
-        } catch (error) {
-
-            console.error(
-                "Google signup failed:",
-                error,
-            );
-
-
-            if (axios.isAxiosError(error)) {
-
-                setErrors({
-                    google:
-                        error.response?.data?.message ||
-                        "Unable to continue with Google. Please try again.",
-                });
-
-                return;
-            }
-
-
-            setErrors({
-                google:
-                    "Something went wrong. Please try again.",
-            });
-
-        } finally {
-
-            setIsGoogleSigningUp(false);
-
-        }
-
-    };
-
-
-    const passwordRequirements = [
-        {
-            label: "At least 8 characters",
-            valid: formData.password.length >= 8,
-        },
-        {
-            label: "One uppercase letter",
-            valid: /[A-Z]/.test(
-                formData.password,
-            ),
-        },
-        {
-            label: "One lowercase letter",
-            valid: /[a-z]/.test(
-                formData.password,
-            ),
-        },
-        {
-            label: "One number",
-            valid: /[0-9]/.test(
-                formData.password,
-            ),
-        },
-        {
-            label: "One special character",
-            valid: /[^A-Za-z0-9]/.test(
-                formData.password,
-            ),
-        },
-    ];
-
+    const {
+        formData,
+        errors,
+        isSigningUp,
+        isGoogleSigningUp,
+        passwordRequirements,
+        handleChange,
+        handleSubmit,
+        handleGoogleCredential,
+    } = useSignup();
 
     return (
-
         <AuthTemplate
-
             title="Create your Reach account"
-
             description="Join the neighborhood network built around sharing, helping, and real-world community action."
-
             backLink={{
                 label: "← Back to Reach",
                 to: "/",
             }}
-
         >
-
             <form
                 onSubmit={handleSubmit}
                 className="space-y-5"
             >
-
                 <FormField
                     label="Full name"
                     name="fullName"
@@ -280,7 +42,6 @@ function SignupPage() {
                     placeholder="Enter your full name"
                     error={errors.fullName}
                 />
-
 
                 <FormField
                     label="Email"
@@ -292,16 +53,13 @@ function SignupPage() {
                     error={errors.email}
                 />
 
-
                 <div>
-
                     <label
                         htmlFor="password"
                         className="mb-2 block text-xs font-medium text-reach-text"
                     >
                         Password
                     </label>
-
 
                     <PasswordField
                         name="password"
@@ -311,27 +69,20 @@ function SignupPage() {
                         error={errors.password}
                     />
 
-
                     {formData.password.length > 0 && (
                         <PasswordRequirements
-                            requirements={
-                                passwordRequirements
-                            }
+                            requirements={passwordRequirements}
                         />
                     )}
-
                 </div>
 
-
                 <div>
-
                     <label
                         htmlFor="confirmPassword"
                         className="mb-2 block text-xs font-medium text-reach-text"
                     >
                         Confirm password
                     </label>
-
 
                     <PasswordField
                         name="confirmPassword"
@@ -340,27 +91,19 @@ function SignupPage() {
                         placeholder="Confirm your password"
                         error={errors.confirmPassword}
                     />
-
                 </div>
 
-
                 <div>
-
                     <label className="flex items-start gap-2 text-xs text-reach-text/70">
-
                         <input
                             type="checkbox"
                             name="termsAccepted"
-                            checked={
-                                formData.termsAccepted
-                            }
+                            checked={formData.termsAccepted}
                             onChange={handleChange}
                             className="mt-0.5"
                         />
 
-
                         <span>
-
                             I agree to the{" "}
 
                             <a
@@ -378,20 +121,15 @@ function SignupPage() {
                             >
                                 Privacy Policy
                             </a>
-
                         </span>
-
                     </label>
-
 
                     {errors.termsAccepted && (
                         <p className="mt-2 text-xs text-red-600">
                             {errors.termsAccepted}
                         </p>
                     )}
-
                 </div>
-
 
                 {errors.signup && (
                     <p className="text-xs text-red-600">
@@ -399,18 +137,20 @@ function SignupPage() {
                     </p>
                 )}
 
-
                 <Button
                     type="submit"
                     className="w-full"
-                    disabled={isGoogleSigningUp}
+                    disabled={
+                        isSigningUp ||
+                        isGoogleSigningUp
+                    }
                 >
-                    Create account →
+                    {isSigningUp
+                        ? "Creating account..."
+                        : "Create account →"}
                 </Button>
 
-
                 <div className="flex items-center gap-3">
-
                     <div className="h-px flex-1 bg-gray-200" />
 
                     <span className="text-sm text-gray-500">
@@ -418,9 +158,7 @@ function SignupPage() {
                     </span>
 
                     <div className="h-px flex-1 bg-gray-200" />
-
                 </div>
-
 
                 {errors.google && (
                     <p className="text-xs text-red-600">
@@ -428,16 +166,11 @@ function SignupPage() {
                     </p>
                 )}
 
-
                 <GoogleSignInButton
-                    onCredential={
-                        handleGoogleCredential
-                    }
+                    onCredential={handleGoogleCredential}
                 />
 
-
                 <p className="text-center text-[10px] text-reach-text/50">
-
                     Already have an account?{" "}
 
                     <Link
@@ -446,15 +179,10 @@ function SignupPage() {
                     >
                         Log in
                     </Link>
-
                 </p>
-
             </form>
-
         </AuthTemplate>
-
     );
 }
-
 
 export default SignupPage;
