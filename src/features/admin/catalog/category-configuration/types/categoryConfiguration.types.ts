@@ -44,3 +44,16 @@ export interface CategoryConfigurationPropertyOptionDto {
     value: string;
     displayOrder: number;
 }
+
+
+
+export interface ConfigureCoreFieldsDto {
+    coreFields: ConfigureCoreFieldDto[];
+}
+
+export interface ConfigureCoreFieldDto {
+    fieldKey: string;
+    required: boolean;
+    isEnabled: boolean;
+    displayOrder: number;
+}

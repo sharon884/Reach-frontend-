@@ -1,6 +1,7 @@
 import { baseApi } from "@/services/baseApi";
 import type {
     CategoryConfigurationDraftDto,
+    ConfigureCoreFieldsDto,
     CreateCategoryConfigurationDraftDto,
 } from "../types/categoryConfiguration.types";
 
@@ -26,6 +27,21 @@ export const categoryConfigurationApi = baseApi.injectEndpoints({
         >({
             query: ({ draftId, body }) => ({
                 url: `/category-configurations/drafts/${draftId}/category`,
+                method: "PATCH",
+                body,
+            }),
+        }),
+
+
+        configureCoreFields: builder.mutation<
+            CategoryConfigurationDraftDto,
+            {
+                draftId: string;
+                body: ConfigureCoreFieldsDto;
+            }
+        >({
+            query: ({ draftId, body }) => ({
+                url: `/category-configurations/drafts/${draftId}/core-fields`,
                 method: "PATCH",
                 body,
             }),
