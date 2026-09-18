@@ -6,7 +6,7 @@ import axios from "axios";
 
 import Button from "@/components/atoms/Button/Button";
 import FormField from "@/components/molecules/FormField/FormField";
-import PasswordField from "@/components/molecules/PasswordField";
+import PasswordField from "@/components/molecules/PasswordField/PasswordField";
 import GoogleSignInButton from "@/components/molecules/GoogleSignInButton/GoogleSignInButton";
 
 import { login, googleLogin } from "@/services/auth/auth.service";
