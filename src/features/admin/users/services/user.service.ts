@@ -1,30 +1,11 @@
 import { api } from "@/services/api";
 
-export interface AdminUser {
-    id: string;
-    fullName: string;
-    email: string;
-    role: string;
-    status: string;
-    isEmailVerified: boolean;
-    createdAt: string;
-}
-
-export interface GetUsersParams {
-    page?: number;
-    limit?: number;
-    search?: string;
-    sortBy?: string;
-    sortOrder?: "asc" | "desc";
-}
-
-export interface GetUsersResponse {
-    users: AdminUser[];
-    total: number;
-    totalPages: number;
-    page: number;
-    limit: number;
-}
+import type {
+    AdminUser,
+    GetUsersParams,
+    GetUsersResponse,
+    UpdateUserStatusRequest,
+} from "@/features/admin/users/types/user.types";
 
 
 export interface ApiResponse<T> {
@@ -52,9 +33,7 @@ export async function getUsers(
 // Update user status 
 
 
-export interface UpdateUserStatusRequest {
-    status: "ACTIVE" | "BLOCKED";
-}
+
 
 export async function updateUserStatus(
     userId: string,
