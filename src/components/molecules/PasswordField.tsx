@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 
-import Input from "../atoms/Input";
+import Input from "../atoms/Input/Input";
 
 interface PasswordFieldProps {
     name: string;

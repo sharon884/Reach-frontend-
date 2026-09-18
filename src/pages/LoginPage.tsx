@@ -4,10 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import Button from "@/components/atoms/Button";
-import FormField from "@/components/molecules/FormField";
+import Button from "@/components/atoms/Button/Button";
+import FormField from "@/components/molecules/FormField/FormField";
 import PasswordField from "@/components/molecules/PasswordField";
-import GoogleSignInButton from "@/components/molecules/GoogleSignInButton";
+import GoogleSignInButton from "@/components/molecules/GoogleSignInButton/GoogleSignInButton";
 
 import { login, googleLogin } from "@/services/auth/auth.service";
 

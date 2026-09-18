@@ -6,11 +6,11 @@ import axios from "axios";
 
 import { signup, googleLogin } from "@/services/auth/auth.service";
 
-import Button from "@/components/atoms/Button";
-import FormField from "@/components/molecules/FormField";
+import Button from "@/components/atoms/Button/Button";
+import FormField from "@/components/molecules/FormField/FormField";
 import PasswordField from "@/components/molecules/PasswordField";
 import PasswordRequirements from "@/components/molecules/PasswordRequirements";
-import GoogleSignInButton from "@/components/molecules/GoogleSignInButton";
+import GoogleSignInButton from "@/components/molecules/GoogleSignInButton/GoogleSignInButton";
 
 import { signupSchema } from "@/schemas/auth/signup.schema";
 
