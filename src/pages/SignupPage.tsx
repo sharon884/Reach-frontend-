@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import { signup, googleLogin } from "@/services/auth/auth.service";
+import { signup, googleLogin } from "@/features/auth/services/auth.service";
+import { signupSchema } from "@/features/auth/schemas/signup.schema";
 
 import Button from "@/components/atoms/Button/Button";
 import FormField from "@/components/molecules/FormField/FormField";
@@ -12,7 +13,6 @@ import PasswordField from "@/components/molecules/PasswordField/PasswordField";
 import PasswordRequirements from "@/components/molecules/PasswordRequirements/PasswordRequirements";
 import GoogleSignInButton from "@/components/molecules/GoogleSignInButton/GoogleSignInButton";
 
-import { signupSchema } from "@/schemas/auth/signup.schema";
 
 import AuthTemplate from "@/components/templates/AuthTemplate";
 

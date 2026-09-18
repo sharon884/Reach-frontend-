@@ -2,7 +2,7 @@ import { useState } from "react";
 import FormField from "@/components/molecules/FormField/FormField";
 import PasswordField from "@/components/molecules/PasswordField/PasswordField";
 import { useNavigate } from "react-router-dom";
-import { loginSchema } from "@/schemas/auth/login.schema";
+import { loginSchema } from "@/features/auth/schemas/login.schema";
 import { adminLogin } from "@/services/admin/auth.service";
 import Button from "@/components/atoms/Button/Button";
 import axios from "axios";

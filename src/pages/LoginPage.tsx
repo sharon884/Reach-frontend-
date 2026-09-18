@@ -9,9 +9,8 @@ import FormField from "@/components/molecules/FormField/FormField";
 import PasswordField from "@/components/molecules/PasswordField/PasswordField";
 import GoogleSignInButton from "@/components/molecules/GoogleSignInButton/GoogleSignInButton";
 
-import { login, googleLogin } from "@/services/auth/auth.service";
-
-import { loginSchema } from "@/schemas/auth/login.schema";
+import { login, googleLogin } from "@/features/auth/services/auth.service";
+import { loginSchema } from "@/features/auth/schemas/login.schema";
 
 import AuthTemplate from "@/components/templates/AuthTemplate";
 

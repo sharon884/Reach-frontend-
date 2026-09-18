@@ -5,8 +5,12 @@ import axios from "axios";
 import Button from "@/components/atoms/Button/Button";
 import OtpInput from "@/components/molecules/OtpInput/OtpInput";
 import AuthTemplate from "@/components/templates/AuthTemplate";
-import { verifyOtp, resendOtp } from "@/services/auth/auth.service";
-import { verifyOtpSchema } from "@/schemas/auth/verify-otp.schema";
+import {
+    verifyOtp,
+    resendOtp,
+} from "@/features/auth/services/auth.service";
+
+import { verifyOtpSchema } from "@/features/auth/schemas/verify-otp.schema";
 
 function VerifyOtpPage() {
 
