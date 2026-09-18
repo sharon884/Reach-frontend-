@@ -57,3 +57,33 @@ export interface ConfigureCoreFieldDto {
     isEnabled: boolean;
     displayOrder: number;
 }
+
+
+export interface ConfigureDynamicPropertiesDto {
+    properties: ConfigureDynamicPropertyDto[];
+}
+
+export interface ConfigureDynamicPropertyDto {
+    propertyId?: string;
+    name?: string;
+    slug?: string;
+    description?: string | null;
+    dataType: string;
+    validationConfig?: Record<string, unknown> | null;
+    required: boolean;
+    filterable: boolean;
+    sortable: boolean;
+    displayOrder: number;
+    options?: ConfigureDynamicPropertyOptionDto[];
+}
+
+export interface ConfigureDynamicPropertyOptionDto {
+    label: string;
+    value: string;
+    displayOrder: number;
+}
+
+
+export interface PublishCategoryConfigurationDto {
+    draftId: string;
+}

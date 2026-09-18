@@ -3,6 +3,8 @@ import type {
     CategoryConfigurationDraftDto,
     ConfigureCoreFieldsDto,
     CreateCategoryConfigurationDraftDto,
+    ConfigureDynamicPropertiesDto,
+    PublishCategoryConfigurationDto,
 } from "../types/categoryConfiguration.types";
 
 export const categoryConfigurationApi = baseApi.injectEndpoints({
@@ -46,6 +48,34 @@ export const categoryConfigurationApi = baseApi.injectEndpoints({
                 body,
             }),
         }),
+
+
+        configureDynamicProperties: builder.mutation<
+            CategoryConfigurationDraftDto,
+            {
+                draftId: string;
+                body: ConfigureDynamicPropertiesDto;
+            }
+        >({
+            query: ({ draftId, body }) => ({
+                url: `/category-configurations/drafts/${draftId}/properties`,
+                method: "PATCH",
+                body,
+            }),
+        }),
+
+
+        publishConfiguration: builder.mutation<
+            null,
+            PublishCategoryConfigurationDto
+        >({
+            query: ({ draftId }) => ({
+                url: `/category-configurations/drafts/${draftId}/publish`,
+                method: "POST",
+            }),
+        }),
+
+        
     }),
 });
 
