@@ -1,104 +1,27 @@
-import { useState } from "react";
 import FormField from "@/components/molecules/FormField/FormField";
 import PasswordField from "@/components/molecules/PasswordField/PasswordField";
-import { useNavigate } from "react-router-dom";
-import { loginSchema } from "@/features/auth/schemas/login.schema";
-import { adminLogin } from "@/services/admin/auth.service";
 import Button from "@/components/atoms/Button/Button";
-import axios from "axios";
+
+import { useAdminLogin } from "@/features/admin/auth/hooks/useAdminLogin";
 
 function AdminLoginPage() {
-    const navigate = useNavigate();
-
-    const [formData, setFormData] = useState({
-        email: "",
-        password: "",
-    });
-
-    const [formErrors, setFormErrors] = useState<{
-        email?: string;
-        password?: string;
-    }>({});
-
-    const [loginError, setLoginError] = useState("");
-    const [isLoggingIn, setIsLoggingIn] = useState(false);
-
-
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement>,
-    ) => {
-        const { name, value } = e.target;
-
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-
-        setFormErrors((prev) => ({
-            ...prev,
-            [name]: undefined,
-        }));
-
-        setLoginError("");
-    };
-
-    const handleSubmit = async (
-        e: React.FormEvent<HTMLFormElement>,
-    ) => {
-        e.preventDefault();
-
-        setLoginError("");
-
-        const result = loginSchema.safeParse(formData);
-
-        if (!result.success) {
-            const errors: {
-                email?: string;
-                password?: string;
-            } = {};
-
-            result.error.issues.forEach((issue) => {
-                const field = issue.path[0];
-
-                if (field === "email" || field === "password") {
-                    errors[field] = issue.message;
-                }
-            });
-
-            setFormErrors(errors);
-            return;
-        }
-
-        try {
-            setIsLoggingIn(true);
-
-            await adminLogin({
-                email: formData.email,
-                password: formData.password,
-            });
-
-            navigate("/admin/users");
-        } catch (error: unknown) {
-            if (axios.isAxiosError(error)) {
-                setLoginError(
-                    error.response?.data?.message ||
-                    "Unable to login. Please try again.",
-                );
-            } else {
-                setLoginError("Unable to login. Please try again.");
-            }
-        } finally {
-            setIsLoggingIn(false);
-        }
-    };
+    const {
+        formData,
+        formErrors,
+        loginError,
+        isLoggingIn,
+        handleChange,
+        handleSubmit,
+        handleBack,
+    } = useAdminLogin();
 
     return (
-        <div className="min-h-screen bg-reach-beige text-reach-text flex flex-col">
+        <div className="flex min-h-screen flex-col bg-reach-beige text-reach-text">
             {/* Header */}
             <header className="px-6 py-6 md:px-10">
                 <button
                     type="button"
-                    onClick={() => navigate("/")}
+                    onClick={handleBack}
                     className="text-2xl font-semibold tracking-tight text-reach-plum"
                 >
                     Reach
@@ -183,7 +106,7 @@ function AdminLoginPage() {
                         <div className="mt-7 text-center">
                             <button
                                 type="button"
-                                onClick={() => navigate("/")}
+                                onClick={handleBack}
                                 className="text-sm text-gray-600 transition hover:text-reach-plum"
                             >
                                 ← Back to Reach
