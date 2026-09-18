@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { logout } from "../services/auth/auth.service";
-
+import { logout } from "@/features/auth/services/auth.service";
 function FeedPage() {
     const navigate = useNavigate();
 

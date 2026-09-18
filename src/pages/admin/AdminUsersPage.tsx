@@ -1,112 +1,29 @@
-import { useEffect, useState } from "react";
+import { useAdminUsers } from "@/features/admin/users/hooks/useAdminUsers";
 
-import {
-    getUsers,
-    updateUserStatus,
-    type AdminUser,
-} from "../../services/admin/user.service";
-import AdminUsersTable from "../../components/organisms/AdminUsersTable";
-import AdminUsersControls from "../../components/organisms/AdminUsersControls";
-import AdminPagination from "../../components/organisms/AdminPagination";
+import AdminUsersTable from "@/features/admin/users/components/AdminUsersTable/AdminUsersTable";
+
+import AdminUsersControls from "@/features/admin/users/components/AdminUsersControls/AdminUsersControls";
+
+import AdminPagination from "@/features/admin/users/components/AdminPagination/AdminPagination";
 
 export default function AdminUsersPage() {
-    const [users, setUsers] = useState<AdminUser[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-
-    const [search, setSearch] = useState("");
-    const [debouncedSearch, setDebouncedSearch] = useState("");
-
-    const [sortBy, setSortBy] = useState<
-        "fullName" | "email" | "role" | "status" | "createdAt"
-    >("createdAt");
-
-    const [sortOrder, setSortOrder] =
-        useState<"asc" | "desc">("desc");
-
-
-    const [error, setError] = useState("");
-    const [updatingUserId, setUpdatingUserId] = useState<string | null>(null);
-    const [statusError, setStatusError] = useState("");
-
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setDebouncedSearch(search);
-            setPage(1);
-        }, 400);
-
-        return () => {
-            clearTimeout(timer);
-        };
-    }, [search]);
-
-
-
-    useEffect(() => {
-        async function fetchUsers() {
-            try {
-                setLoading(true);
-
-                const response = await getUsers({
-                    page,
-                    limit: 10,
-                    search: debouncedSearch,
-                    sortBy,
-                    sortOrder,
-                });
-
-                setUsers(response.users);
-                setTotalPages(response.totalPages);
-            } catch (error) {
-                console.error(
-                    "Failed to fetch users:",
-                    error,
-                );
-                setError("Failed to load users. Please try again.");
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        fetchUsers();
-    }, [page, debouncedSearch, sortBy, sortOrder]);
-
-    async function handleStatusChange(
-        userId: string,
-        status: "ACTIVE" | "BLOCKED",
-    ) {
-        try {
-            setStatusError("");
-            setUpdatingUserId(userId);
-
-            const updatedUser = await updateUserStatus(
-                userId,
-                { status },
-            );
-
-            setUsers((currentUsers) =>
-                currentUsers.map((user) =>
-                    user.id === userId
-                        ? updatedUser
-                        : user,
-                ),
-            );
-        } catch (error) {
-            console.error(
-                "Failed to update user status:",
-                error,
-            );
-
-            setStatusError(
-                "Failed to update user status. Please try again.",
-            );
-        } finally {
-            setUpdatingUserId(null);
-        }
-    }
+    const {
+        users,
+        loading,
+        error,
+        page,
+        totalPages,
+        search,
+        sortBy,
+        sortOrder,
+        updatingUserId,
+        statusError,
+        setPage,
+        setSearch,
+        setSortBy,
+        setSortOrder,
+        handleStatusChange,
+    } = useAdminUsers();
 
     if (loading) {
         return (
@@ -115,7 +32,6 @@ export default function AdminUsersPage() {
             </div>
         );
     }
-
 
     if (error) {
         return (
@@ -126,7 +42,6 @@ export default function AdminUsersPage() {
             </div>
         );
     }
-
 
     return (
         <div className="p-6">
@@ -149,22 +64,20 @@ export default function AdminUsersPage() {
                     setSortOrder(value);
                     setPage(1);
                 }}
-
-
             />
+
             {statusError && (
                 <p className="mb-4 text-sm text-red-600">
                     {statusError}
                 </p>
             )}
-            {/* Users Table */}
+
             <AdminUsersTable
                 users={users}
                 updatingUserId={updatingUserId}
                 onStatusChange={handleStatusChange}
             />
 
-            {/* Pagination */}
             <AdminPagination
                 page={page}
                 totalPages={totalPages}
