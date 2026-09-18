@@ -16,9 +16,24 @@ export const categoryConfigurationApi = baseApi.injectEndpoints({
                 body,
             }),
         }),
+
+        updateCategory: builder.mutation<
+            CategoryConfigurationDraftDto,
+            {
+                draftId: string;
+                body: CreateCategoryConfigurationDraftDto;
+            }
+        >({
+            query: ({ draftId, body }) => ({
+                url: `/category-configurations/drafts/${draftId}/category`,
+                method: "PATCH",
+                body,
+            }),
+        }),
     }),
 });
 
 export const {
     useCreateDraftMutation,
+    useUpdateCategoryMutation,
 } = categoryConfigurationApi;
