@@ -5,9 +5,9 @@ import {
     updateUserStatus,
     type AdminUser,
 } from "@/services/admin/user.service";
-import AdminUsersTable from "@/components/organisms/AdminUsersTable";
-import AdminUsersControls from "@/components/organisms/AdminUsersControls";
-import AdminPagination from "@/components/organisms/AdminPagination";
+import AdminUsersTable from "@/features/admin/users/components/AdminUsersTable/AdminUsersTable";
+import AdminUsersControls from "@/features/admin/users/components/AdminUsersControls/AdminUsersControls";
+import AdminPagination from "@/features/admin/users/components/AdminPagination/AdminPagination";
 
 export default function AdminUsersPage() {
     const [users, setUsers] = useState<AdminUser[]>([]);
