@@ -1,4 +1,4 @@
-import type { AdminUser } from "@/features/admin/users/services/user.service";
+import type { AdminUser } from "@/features/admin/users/types/user.types";
 
 interface AdminUsersTableProps {
     users: AdminUser[];
