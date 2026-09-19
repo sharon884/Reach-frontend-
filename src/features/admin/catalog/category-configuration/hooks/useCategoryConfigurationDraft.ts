@@ -37,3 +37,5 @@ export function useCategoryConfigurationDraft(draftId: string | null) {
         error,
     };
 }
+
+
