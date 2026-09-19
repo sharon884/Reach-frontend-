@@ -9,6 +9,16 @@ import type {
 
 export const categoryConfigurationApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
+
+        getDraft: builder.query<
+            CategoryConfigurationDraftDto,
+            string
+        >({
+            query: (draftId) => ({
+                url: `/category-configurations/drafts/${draftId}`,
+                method: "GET",
+            }),
+        }),
         createDraft: builder.mutation<
             CategoryConfigurationDraftDto,
             CreateCategoryConfigurationDraftDto
@@ -75,11 +85,15 @@ export const categoryConfigurationApi = baseApi.injectEndpoints({
             }),
         }),
 
-        
+
     }),
 });
 
 export const {
+    useGetDraftQuery,
     useCreateDraftMutation,
     useUpdateCategoryMutation,
+    useConfigureCoreFieldsMutation,
+    useConfigureDynamicPropertiesMutation,
+    usePublishConfigurationMutation,
 } = categoryConfigurationApi;
