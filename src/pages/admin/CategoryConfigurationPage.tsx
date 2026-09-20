@@ -1,7 +1,9 @@
 import { useParams } from "react-router-dom";
 
-import CategoryInformation from "@/features/admin/catalog/category-configuration/components/CategoryInformation/CategoryInformation";
+import CategoryInformation   from "@/features/admin/catalog/category-configuration/components/CategoryInformation/CategoryInformation";
+import CoreFields from "@/features/admin/catalog/category-configuration/components/CoreFields";
 import { useCategoryConfigurationDraft } from "@/features/admin/catalog/category-configuration/hooks/useCategoryConfigurationDraft";
+import DynamicProperties from "@/features/admin/catalog/category-configuration/components/DynamicProperties";
 
 function CategoryConfigurationPage() {
     const { draftId } = useParams<{
@@ -44,6 +46,10 @@ function CategoryConfigurationPage() {
             </div>
 
             <CategoryInformation />
+
+            <CoreFields />
+
+            <DynamicProperties />
         </div>
     );
 }

@@ -7,6 +7,16 @@ export type CoreFieldKey =
     | "EXPIRY";
 
 
+export type PropertyDataType =
+    | "TEXT"
+    | "LONG_TEXT"
+    | "NUMBER"
+    | "BOOLEAN"
+    | "DATE"
+    | "SELECT"
+    | "MULTI_SELECT";
+    
+    
 
 export interface Category {
     id: string;
@@ -54,7 +64,7 @@ export interface CategoryConfigurationPropertyDto {
     name?: string;
     slug?: string;
     description?: string | null;
-    dataType: string;
+    dataType: PropertyDataType;
     validationConfig?: Record<string, unknown> | null;
     required: boolean;
     filterable: boolean;
@@ -91,7 +101,7 @@ export interface ConfigureDynamicPropertyDto {
     name?: string;
     slug?: string;
     description?: string | null;
-    dataType: string;
+    dataType: PropertyDataType;
     validationConfig?: Record<string, unknown> | null;
     required: boolean;
     filterable: boolean;

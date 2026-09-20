@@ -5,6 +5,8 @@ import type {
 import type {
     ConfigureCoreFieldDto,
     ConfigureDynamicPropertyDto,
+    ConfigureDynamicPropertyOptionDto,
+
 } from "../types/categoryConfiguration.types";
 
 import type { CategoryConfigurationDraftDto } from "../types/categoryConfiguration.types";
@@ -72,6 +74,106 @@ const categoryConfigurationSlice = createSlice({
             state.persistence.saveStatus = "idle";
         },
 
+
+        updateProperty(
+            state,
+            action: PayloadAction<{
+                index: number;
+                property: ConfigureDynamicPropertyDto;
+            }>,
+        ) {
+            state.properties[action.payload.index] = action.payload.property;
+            state.persistence.dirtySections.properties = true;
+            state.persistence.saveStatus = "idle";
+        },
+
+        removeProperty(
+            state,
+            action: PayloadAction<number>,
+        ) {
+            state.properties.splice(action.payload, 1);
+
+            state.properties = state.properties.map(
+                (property, index) => ({
+                    ...property,
+                    displayOrder: index,
+                }),
+            );
+
+            state.persistence.dirtySections.properties = true;
+            state.persistence.saveStatus = "idle";
+        },
+
+
+        addPropertyOption(
+            state,
+            action: PayloadAction<{
+                propertyIndex: number;
+                option: ConfigureDynamicPropertyOptionDto;
+            }>,
+        ) {
+            const property = state.properties[action.payload.propertyIndex];
+
+            if (!property) {
+                return;
+            }
+
+            property.options = [
+                ...(property.options ?? []),
+                action.payload.option,
+            ];
+
+            state.persistence.dirtySections.properties = true;
+            state.persistence.saveStatus = "idle";
+        },
+
+        updatePropertyOption(
+            state,
+            action: PayloadAction<{
+                propertyIndex: number;
+                optionIndex: number;
+                option: ConfigureDynamicPropertyOptionDto;
+            }>,
+        ) {
+            const property = state.properties[action.payload.propertyIndex];
+
+            if (!property?.options) {
+                return;
+            }
+
+            property.options[action.payload.optionIndex] =
+                action.payload.option;
+
+            state.persistence.dirtySections.properties = true;
+            state.persistence.saveStatus = "idle";
+        },
+
+        removePropertyOption(
+            state,
+            action: PayloadAction<{
+                propertyIndex: number;
+                optionIndex: number;
+            }>,
+        ) {
+            const property = state.properties[action.payload.propertyIndex];
+
+            if (!property?.options) {
+                return;
+            }
+
+            property.options.splice(action.payload.optionIndex, 1);
+
+            property.options = property.options.map(
+                (option, index) => ({
+                    ...option,
+                    displayOrder: index,
+                }),
+            );
+
+            state.persistence.dirtySections.properties = true;
+            state.persistence.saveStatus = "idle";
+        },
+
         markSectionClean(
             state,
             action: PayloadAction<
@@ -99,29 +201,29 @@ const categoryConfigurationSlice = createSlice({
         },
 
         hydrateFromDraft(
-    state,
-    action: PayloadAction<CategoryConfigurationDraftDto>,
-) {
-    state.draftId = action.payload.draftId;
+            state,
+            action: PayloadAction<CategoryConfigurationDraftDto>,
+        ) {
+            state.draftId = action.payload.draftId;
 
-    state.category = {
-        name: action.payload.category.name,
-        description: action.payload.category.description,
-        parentId: action.payload.category.parentId,
-    };
+            state.category = {
+                name: action.payload.category.name,
+                description: action.payload.category.description,
+                parentId: action.payload.category.parentId,
+            };
 
-    state.coreFields = action.payload.coreFields;
-    state.properties = action.payload.properties;
+            state.coreFields = action.payload.coreFields;
+            state.properties = action.payload.properties;
 
-    state.persistence.dirtySections = {
-        category: false,
-        coreFields: false,
-        properties: false,
-    };
+            state.persistence.dirtySections = {
+                category: false,
+                coreFields: false,
+                properties: false,
+            };
 
-    state.persistence.saveStatus = "saved";
-    state.persistence.lastSavedAt = new Date().toISOString();
-},
+            state.persistence.saveStatus = "saved";
+            state.persistence.lastSavedAt = new Date().toISOString();
+        },
     },
 });
 
@@ -130,6 +232,11 @@ export const {
     setCategory,
     setCoreFields,
     setProperties,
+    updateProperty,
+    removeProperty,
+    addPropertyOption,
+    updatePropertyOption,
+    removePropertyOption,
     markSectionClean,
     markSaving,
     markSaved,
