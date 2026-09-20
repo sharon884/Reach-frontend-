@@ -1,3 +1,17 @@
+export interface Category {
+    id: string;
+    name: string;
+    slug: string;
+    description: string | null;
+    parentId: string | null;
+    status: "ACTIVE" | "INACTIVE";
+    displayOrder: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+
+
 export interface CreateCategoryConfigurationDraftDto {
     name: string;
     description: string | null;
@@ -86,4 +100,11 @@ export interface ConfigureDynamicPropertyOptionDto {
 
 export interface PublishCategoryConfigurationDto {
     draftId: string;
+}
+
+
+export interface UpdateCategoryDraftDto {
+    name: string;
+    description: string | null;
+    parentId: string | null;
 }

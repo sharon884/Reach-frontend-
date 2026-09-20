@@ -1,36 +1,49 @@
 import { useParams } from "react-router-dom";
 
-import { useAppSelector } from "@/store/hooks";
+import CategoryInformation from "@/features/admin/catalog/category-configuration/components/CategoryInformation/CategoryInformation";
 import { useCategoryConfigurationDraft } from "@/features/admin/catalog/category-configuration/hooks/useCategoryConfigurationDraft";
-import { selectCategory } from "@/features/admin/catalog/category-configuration/store/categoryConfigurationSelectors";
 
 function CategoryConfigurationPage() {
-    const { draftId } = useParams<{ draftId: string }>();
+    const { draftId } = useParams<{
+        draftId: string;
+    }>();
 
     const {
         isLoading,
         isError,
-    } = useCategoryConfigurationDraft(draftId ?? null);
-
-    const category = useAppSelector(selectCategory);
+    } = useCategoryConfigurationDraft(
+        draftId ?? null,
+    );
 
     if (isLoading) {
-        return <div>Loading category configuration...</div>;
+        return (
+            <div>
+                Loading category configuration...
+            </div>
+        );
     }
 
     if (isError) {
-        return <div>Failed to load category configuration.</div>;
+        return (
+            <div>
+                Failed to load category configuration.
+            </div>
+        );
     }
 
     return (
-        <div>
-            <h1>Category Configuration</h1>
+        <div className="space-y-6">
+            <div>
+                <h1 className="text-xl font-semibold text-reach-text">
+                    Category Configuration
+                </h1>
 
-            <p>Draft ID: {draftId}</p>
+                <p className="mt-1 text-sm text-reach-text/60">
+                    Configure the category and its dynamic properties.
+                </p>
+            </div>
 
-            <p>
-                Category Name: {category.name || "Unnamed"}
-            </p>
+            <CategoryInformation />
         </div>
     );
 }

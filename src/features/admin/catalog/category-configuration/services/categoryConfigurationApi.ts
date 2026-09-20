@@ -1,8 +1,9 @@
 import { baseApi } from "@/services/baseApi";
 import type {
+    Category,
     CategoryConfigurationDraftDto,
     ConfigureCoreFieldsDto,
-    CreateCategoryConfigurationDraftDto,
+    UpdateCategoryDraftDto,
     ConfigureDynamicPropertiesDto,
     PublishCategoryConfigurationDto,
 } from "../types/categoryConfiguration.types";
@@ -15,6 +16,18 @@ interface ApiResponse<T> {
 
 export const categoryConfigurationApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
+
+
+        getCategories: builder.query<Category[], void>({
+            query: () => ({
+                url: "/admin/catalog/categories",
+                method: "GET",
+            }),
+            transformResponse: (response: ApiResponse<Category[]>) =>
+                response.data,
+        }),
+
+
         getDraft: builder.query<
             CategoryConfigurationDraftDto,
             string
@@ -28,11 +41,13 @@ export const categoryConfigurationApi = baseApi.injectEndpoints({
             ) => response.data,
         }),
 
+
+
         updateCategory: builder.mutation<
             CategoryConfigurationDraftDto,
             {
                 draftId: string;
-                body: CreateCategoryConfigurationDraftDto;
+                body: UpdateCategoryDraftDto;
             }
         >({
             query: ({ draftId, body }) => ({
@@ -44,6 +59,8 @@ export const categoryConfigurationApi = baseApi.injectEndpoints({
                 response: ApiResponse<CategoryConfigurationDraftDto>,
             ) => response.data,
         }),
+
+
 
         configureCoreFields: builder.mutation<
             CategoryConfigurationDraftDto,
@@ -62,6 +79,8 @@ export const categoryConfigurationApi = baseApi.injectEndpoints({
             ) => response.data,
         }),
 
+
+
         configureDynamicProperties: builder.mutation<
             CategoryConfigurationDraftDto,
             {
@@ -79,6 +98,8 @@ export const categoryConfigurationApi = baseApi.injectEndpoints({
             ) => response.data,
         }),
 
+
+
         publishConfiguration: builder.mutation<
             null,
             PublishCategoryConfigurationDto
@@ -88,6 +109,8 @@ export const categoryConfigurationApi = baseApi.injectEndpoints({
                 method: "POST",
             }),
         }),
+
+
     }),
 });
 
@@ -95,6 +118,7 @@ export const categoryConfigurationApi = baseApi.injectEndpoints({
 
 
 export const {
+    useGetCategoriesQuery,
     useGetDraftQuery,
     useUpdateCategoryMutation,
     useConfigureCoreFieldsMutation,
