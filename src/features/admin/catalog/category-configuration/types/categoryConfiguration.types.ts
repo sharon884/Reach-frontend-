@@ -1,3 +1,13 @@
+export type CoreFieldKey =
+    | "TITLE"
+    | "DESCRIPTION"
+    | "IMAGES"
+    | "LOCATION"
+    | "QUANTITY"
+    | "EXPIRY";
+
+
+
 export interface Category {
     id: string;
     name: string;
@@ -33,7 +43,7 @@ export interface CategoryConfigurationDraftDto {
 }
 
 export interface CategoryConfigurationCoreFieldDto {
-    fieldKey: string;
+    fieldKey: CoreFieldKey;
     required: boolean;
     isEnabled: boolean;
     displayOrder: number;
@@ -66,12 +76,11 @@ export interface ConfigureCoreFieldsDto {
 }
 
 export interface ConfigureCoreFieldDto {
-    fieldKey: string;
+    fieldKey: CoreFieldKey;
     required: boolean;
     isEnabled: boolean;
     displayOrder: number;
 }
-
 
 export interface ConfigureDynamicPropertiesDto {
     properties: ConfigureDynamicPropertyDto[];
