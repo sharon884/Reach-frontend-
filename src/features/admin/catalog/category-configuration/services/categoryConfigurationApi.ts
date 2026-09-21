@@ -27,6 +27,18 @@ export const categoryConfigurationApi = baseApi.injectEndpoints({
                 response.data,
         }),
 
+        createDraft: builder.mutation<
+            CategoryConfigurationDraftDto,
+            void
+        >({
+            query: () => ({
+                url: "/admin/catalog/category-configurations/drafts",
+                method: "POST",
+            }),
+            transformResponse: (
+                response: ApiResponse<CategoryConfigurationDraftDto>,
+            ) => response.data,
+        }),
 
         getDraft: builder.query<
             CategoryConfigurationDraftDto,
@@ -119,6 +131,7 @@ export const categoryConfigurationApi = baseApi.injectEndpoints({
 
 export const {
     useGetCategoriesQuery,
+    useCreateDraftMutation,
     useGetDraftQuery,
     useUpdateCategoryMutation,
     useConfigureCoreFieldsMutation,

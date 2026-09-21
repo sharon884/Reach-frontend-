@@ -35,6 +35,18 @@ export default function AdminSidebar() {
                 </NavLink>
 
                 <NavLink
+                    to="/admin/catalog/category-configurations"
+                    className={({ isActive }) =>
+                        `rounded-lg px-4 py-3 ${isActive
+                            ? "bg-reach-plum text-white"
+                            : "text-reach-text hover:bg-reach-beige"
+                        }`
+                    }
+                >
+                    Category Configurations
+                </NavLink>
+
+                <NavLink
                     to="/admin/users"
                     className={({ isActive }) =>
                         `rounded-lg px-4 py-3 ${isActive
