@@ -86,3 +86,57 @@ export async function googleLogin(
 ): Promise<void> {
     await api.post("/auth/google", data);
 }
+
+
+
+
+// Forgot Password
+export interface ForgotPasswordRequest {
+    email: string;
+}
+
+export async function forgotPassword(
+    data: ForgotPasswordRequest
+): Promise<void> {
+    await api.post("/auth/forgot-password", data);
+}
+
+
+
+
+// Verify Password Reset OTP
+export interface VerifyPasswordResetOtpRequest {
+    email: string;
+    otp: string;
+}
+
+
+export interface VerifyPasswordResetOtpResponse {
+    resetToken: string;
+}
+
+export async function verifyPasswordResetOtp(
+    data: VerifyPasswordResetOtpRequest
+): Promise<VerifyPasswordResetOtpResponse> {
+    const response = await api.post<{
+        success: boolean;
+        message: string;
+        data: VerifyPasswordResetOtpResponse;
+    }>("/auth/verify-password-reset-otp", data);
+
+    return response.data.data;
+}
+
+
+
+// Reset Password
+export interface ResetPasswordRequest {
+    resetToken: string;
+    newPassword: string;
+}
+
+export async function resetPassword(
+    data: ResetPasswordRequest
+): Promise<void> {
+    await api.post("/auth/reset-password", data);
+}
