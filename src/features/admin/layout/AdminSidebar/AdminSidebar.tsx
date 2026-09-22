@@ -1,15 +1,10 @@
 import { NavLink, useNavigate } from "react-router-dom";
 
 import { adminLogout } from "@/features/admin/auth/services/auth.service";
-
 import { notification } from "@/services/notification";
 
-
-
 export default function AdminSidebar() {
-
     const navigate = useNavigate();
-
 
     async function handleLogout() {
         try {
@@ -40,58 +35,70 @@ export default function AdminSidebar() {
         }
     }
 
+    const navItems = [
+        {
+            label: "Dashboard",
+            to: "/admin/dashboard",
+        },
+        {
+            label: "Users",
+            to: "/admin/users",
+        },
+        {
+            label: "Category Configurations",
+            to: "/admin/catalog/category-configurations",
+        },
+    ];
 
     return (
-        <aside className="flex h-screen w-64 flex-col bg-reach-card p-6">
-            <h1 className="mb-8 text-2xl font-bold text-reach-plum">
-                REACH
-            </h1>
+        <aside className="flex h-screen w-64 shrink-0 flex-col border-r border-reach-plum/10 bg-reach-card">
+            {/* Brand */}
+            <div className="border-b border-reach-plum/10 px-6 py-6">
+                <p className="text-xl font-bold tracking-tight text-reach-plum">
+                    Reach
+                </p>
 
-            <nav className="flex flex-col gap-2">
-                <NavLink
-                    to="/admin/dashboard"
-                    className={({ isActive }) =>
-                        `rounded-lg px-4 py-3 ${isActive
-                            ? "bg-reach-plum text-white"
-                            : "text-reach-text hover:bg-reach-beige"
-                        }`
-                    }
-                >
-                    Dashboard
-                </NavLink>
+                <p className="mt-1 text-[10px] font-medium uppercase tracking-[0.16em] text-reach-text/45">
+                    Management Portal
+                </p>
+            </div>
 
-                <NavLink
-                    to="/admin/catalog/category-configurations"
-                    className={({ isActive }) =>
-                        `rounded-lg px-4 py-3 ${isActive
-                            ? "bg-reach-plum text-white"
-                            : "text-reach-text hover:bg-reach-beige"
-                        }`
-                    }
-                >
-                    Category Configurations
-                </NavLink>
+            {/* Navigation */}
+            <nav className="flex-1 px-4 py-6">
+                <p className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-reach-text/40">
+                    Main
+                </p>
 
-                <NavLink
-                    to="/admin/users"
-                    className={({ isActive }) =>
-                        `rounded-lg px-4 py-3 ${isActive
-                            ? "bg-reach-plum text-white"
-                            : "text-reach-text hover:bg-reach-beige"
-                        }`
-                    }
-                >
-                    Users
-                </NavLink>
+                <div className="flex flex-col gap-1">
+                    {navItems.map((item) => (
+                        <NavLink
+                            key={item.to}
+                            to={item.to}
+                            className={({ isActive }) =>
+                                [
+                                    "rounded-lg px-3 py-2.5 text-sm font-medium transition",
+                                    isActive
+                                        ? "bg-reach-plum text-white shadow-sm"
+                                        : "text-reach-text/70 hover:bg-reach-beige hover:text-reach-plum",
+                                ].join(" ")
+                            }
+                        >
+                            {item.label}
+                        </NavLink>
+                    ))}
+                </div>
             </nav>
 
-            <button
-                type="button"
-                onClick={handleLogout}
-                className="rounded-lg px-4 py-3 text-left text-reach-text hover:bg-reach-beige"
-            >
-                Logout
-            </button>
+            {/* Logout */}
+            <div className="border-t border-reach-plum/10 p-4">
+                <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="w-full rounded-lg px-3 py-2.5 text-left text-sm font-medium text-reach-text/70 transition hover:bg-reach-beige hover:text-reach-plum"
+                >
+                    Log out
+                </button>
+            </div>
         </aside>
     );
 }

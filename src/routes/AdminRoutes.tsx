@@ -5,6 +5,8 @@ import AdminUsersPage from "@/pages/admin/AdminUsersPage";
 import CategoryConfigurationsPage from "@/pages/admin/CategoryConfigurationsPage";
 import CategoryConfigurationPage from "@/pages/admin/CategoryConfigurationPage";
 import AdminLayout from "@/features/admin/layout/AdminLayout";
+import AdminDashboardPage from "@/pages/admin/AdminDashboardPage";
+
 
 function AdminRoutes() {
     return (
@@ -23,6 +25,13 @@ function AdminRoutes() {
                     path="catalog/category-configuration/:draftId"
                     element={<CategoryConfigurationPage />}
                 />
+
+                <Route
+                    path="dashboard"
+                    element={<AdminDashboardPage />}
+                />
+
+
             </Route>
         </Routes>
     );
