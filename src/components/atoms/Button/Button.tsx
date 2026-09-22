@@ -2,12 +2,15 @@ import type { ButtonHTMLAttributes } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: "primary" | "secondary";
+    loading?: boolean;
 }
 
 function Button({
     variant = "primary",
+    loading = false,
     className = "",
     children,
+    disabled,
     ...props
 }: ButtonProps) {
     const baseStyles =
@@ -24,9 +27,20 @@ function Button({
     return (
         <button
             className={`${baseStyles} ${variantStyles[variant]} ${className}`}
+            disabled={loading || disabled}
             {...props}
         >
-            {children}
+            {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                    <span
+                        className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"
+                        aria-hidden="true"
+                    />
+                    <span>{children}</span>
+                </span>
+            ) : (
+                children
+            )}
         </button>
     );
 }

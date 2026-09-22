@@ -14,7 +14,6 @@ function LoginPage() {
         formErrors,
         isLoggingIn,
         isGoogleLoggingIn,
-        loginError,
         handleChange,
         handleSubmit,
         handleGoogleCredential,
@@ -75,23 +74,13 @@ function LoginPage() {
                     />
                 </div>
 
-                {loginError && (
-                    <p className="text-xs text-red-600">
-                        {loginError}
-                    </p>
-                )}
-
                 <Button
                     type="submit"
                     className="w-full"
-                    disabled={
-                        isLoggingIn ||
-                        isGoogleLoggingIn
-                    }
+                    disabled={isGoogleLoggingIn}
+                    loading={isLoggingIn}
                 >
-                    {isLoggingIn
-                        ? "Logging in..."
-                        : "Log in →"}
+                    Log in →
                 </Button>
 
                 <div className="flex items-center gap-3">
@@ -123,4 +112,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage; 
+export default LoginPage;

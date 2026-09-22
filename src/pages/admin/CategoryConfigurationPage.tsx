@@ -4,6 +4,7 @@ import CategoryInformation   from "@/features/admin/catalog/category-configurati
 import CoreFields from "@/features/admin/catalog/category-configuration/components/CoreFields";
 import { useCategoryConfigurationDraft } from "@/features/admin/catalog/category-configuration/hooks/useCategoryConfigurationDraft";
 import DynamicProperties from "@/features/admin/catalog/category-configuration/components/DynamicProperties";
+import Spinner from "@/components/atoms/Spinner";
 
 function CategoryConfigurationPage() {
     const { draftId } = useParams<{
@@ -17,13 +18,13 @@ function CategoryConfigurationPage() {
         draftId ?? null,
     );
 
-    if (isLoading) {
-        return (
-            <div>
-                Loading category configuration...
-            </div>
-        );
-    }
+   if (isLoading) {
+    return (
+        <div className="flex min-h-[400px] items-center justify-center">
+            <Spinner label="Loading..." />
+        </div>
+    );
+}
 
     if (isError) {
         return (

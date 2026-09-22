@@ -1,5 +1,7 @@
 import { useCreateCategoryConfigurationDraft } from "@/features/admin/catalog/category-configuration/hooks/useCreateCategoryConfigurationDraft";
 
+import { Button } from "@/components/atoms";
+
 function CategoryConfigurationsPage() {
     const {
         handleCreateDraft,
@@ -11,25 +13,24 @@ function CategoryConfigurationsPage() {
         <div className="p-6">
             <div className="mb-8 flex items-center justify-between">
                 <div>
+
                     <h1 className="text-2xl font-semibold text-reach-text">
                         Category Configurations
                     </h1>
+
 
                     <p className="mt-1 text-sm text-reach-text/60">
                         Create and manage category configurations.
                     </p>
                 </div>
 
-                <button
+                <Button
                     type="button"
                     onClick={handleCreateDraft}
-                    disabled={isLoading}
-                    className="rounded-lg bg-reach-plum px-5 py-3 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                    loading={isLoading}
                 >
-                    {isLoading
-                        ? "Creating..."
-                        : "+ Create Category Configuration"}
-                </button>
+                    + Create Category Configuration
+                </Button>
             </div>
 
             {isError && (

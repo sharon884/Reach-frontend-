@@ -58,11 +58,9 @@ function VerifyOtpPage() {
                 <Button
                     type="submit"
                     className="w-full"
-                    disabled={isVerifying}
+                    loading={isVerifying}
                 >
-                    {isVerifying
-                        ? "Verifying..."
-                        : "Verify email →"}
+                    Verify email →
                 </Button>
             </form>
         </AuthTemplate>

@@ -261,11 +261,9 @@ function DynamicProperties() {
                 <Button
                     type="button"
                     onClick={handleSave}
-                    disabled={isSaving}
+                    loading={isSaving}
                 >
-                    {isSaving
-                        ? "Saving..."
-                        : "Save Changes"}
+                    Save Changes
                 </Button>
             </div>
         </section>

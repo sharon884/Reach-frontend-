@@ -11,6 +11,8 @@ import {
     loginSchema,
 } from "@/features/auth/schemas/login.schema";
 
+import { notification } from "@/services/notification";
+
 export function useLogin() {
     const navigate = useNavigate();
 
@@ -29,8 +31,6 @@ export function useLogin() {
     const [isGoogleLoggingIn, setIsGoogleLoggingIn] =
         useState(false);
 
-    const [loginError, setLoginError] = useState("");
-
     const handleChange = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
@@ -45,8 +45,6 @@ export function useLogin() {
             ...previous,
             [name]: undefined,
         }));
-
-        setLoginError("");
     };
 
     const handleSubmit = async (
@@ -82,7 +80,6 @@ export function useLogin() {
 
         try {
             setIsLoggingIn(true);
-            setLoginError("");
 
             await login(result.data);
 
@@ -91,15 +88,15 @@ export function useLogin() {
             console.error("Login failed:", error);
 
             if (axios.isAxiosError(error)) {
-                setLoginError(
+                notification.error(
                     error.response?.data?.message ||
-                    "Unable to login. Please try again.",
+                        "Unable to login. Please try again.",
                 );
 
                 return;
             }
 
-            setLoginError(
+            notification.error(
                 "Something went wrong. Please try again.",
             );
         } finally {
@@ -112,7 +109,6 @@ export function useLogin() {
     ) => {
         try {
             setIsGoogleLoggingIn(true);
-            setLoginError("");
 
             await googleLogin({
                 credential,
@@ -126,15 +122,15 @@ export function useLogin() {
             );
 
             if (axios.isAxiosError(error)) {
-                setLoginError(
+                notification.error(
                     error.response?.data?.message ||
-                    "Unable to login with Google. Please try again.",
+                        "Unable to login with Google. Please try again.",
                 );
 
                 return;
             }
 
-            setLoginError(
+            notification.error(
                 "Something went wrong. Please try again.",
             );
         } finally {
@@ -147,7 +143,6 @@ export function useLogin() {
         formErrors,
         isLoggingIn,
         isGoogleLoggingIn,
-        loginError,
         handleChange,
         handleSubmit,
         handleGoogleCredential,

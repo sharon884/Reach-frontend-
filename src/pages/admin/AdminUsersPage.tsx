@@ -6,6 +6,8 @@ import AdminUsersControls from "@/features/admin/users/components/AdminUsersCont
 
 import AdminPagination from "@/features/admin/users/components/AdminPagination/AdminPagination";
 
+import { Spinner } from "@/components/atoms";
+
 export default function AdminUsersPage() {
     const {
         users,
@@ -25,14 +27,14 @@ export default function AdminUsersPage() {
         handleStatusChange,
     } = useAdminUsers();
 
-    if (loading) {
-        return (
-            <div className="p-6">
-                Loading users...
-            </div>
-        );
-    }
-
+    
+if (loading) {
+    return (
+        <div className="flex min-h-[400px] items-center justify-center">
+            <Spinner label="Loading..." />
+        </div>
+    );
+}
     if (error) {
         return (
             <div className="p-6">

@@ -269,16 +269,10 @@ function CategoryInformation() {
                                 {categories?.map(
                                     (categoryOption) => (
                                         <option
-                                            key={
-                                                categoryOption.id
-                                            }
-                                            value={
-                                                categoryOption.id
-                                            }
+                                            key={categoryOption.id}
+                                            value={categoryOption.id}
                                         >
-                                            {
-                                                categoryOption.name
-                                            }
+                                            {categoryOption.name}
                                         </option>
                                     ),
                                 )}
@@ -316,14 +310,10 @@ function CategoryInformation() {
 
                     <Button
                         type="submit"
-                        disabled={
-                            !isDirty ||
-                            isSaving
-                        }
+                        disabled={!isDirty}
+                        loading={isSaving}
                     >
-                        {isSaving
-                            ? "Saving..."
-                            : "Save Changes"}
+                        Save Changes
                     </Button>
                 </div>
             </form>
