@@ -18,9 +18,9 @@ function AuthTemplate({
     backLink,
 }: AuthTemplateProps) {
     return (
-        <div className="min-h-screen bg-reach-surface">
-            <main className="px-5 py-10 md:py-16">
-                <div className="mx-auto max-w-md">
+        <div className="flex min-h-screen flex-col bg-reach-surface">
+            <main className="flex flex-1 items-center justify-center px-5 py-10 md:py-16">
+                <div className="w-full max-w-md">
                     <div className="text-center">
                         <Link
                             to="/"
