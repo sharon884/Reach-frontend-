@@ -2,8 +2,99 @@
 
 @theme {
     --color-reach-beige: #ebe1d4;
+
+    --color-reach-surface: #f6f3f2;
+
+    --color-reach-card: #fcf9f8;
+
+    --color-reach-text: #1e1e1e;
+
+    --color-reach-plum: #4a174f;
+
+    --animate-reach-orbit: reach-orbit 3s linear infinite;
+}
+
+@keyframes reach-orbit {
+    from {
+        transform: rotate(0deg) rotateX(65deg) rotateY(-12deg);
+    }
+
+    to {
+        transform: rotate(360deg) rotateX(65deg) rotateY(-12deg);
+    }
+}
+
+
+@theme {
+    --color-reach-beige: #ebe1d4;
     --color-reach-surface: #f6f3f2;
     --color-reach-card: #fcf9f8;
     --color-reach-text: #1e1e1e;
     --color-reach-plum: #4a174f;
+
+    --animate-reach-orbit: reach-orbit 3s linear infinite;
+    --animate-reach-loading: reach-loading 1.8s ease-in-out infinite;
 }
+
+@keyframes reach-loading {
+    0%,
+    100% {
+        opacity: 0.35;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-2px);
+    }
+}
+
+/* 
+@theme {
+    --color-reach-beige: #ebe1d4;
+    --color-reach-surface: #f6f3f2;
+    --color-reach-card: #fcf9f8;
+    --color-reach-text: #1e1e1e;
+    --color-reach-plum: #4a174f;
+
+    --animate-reach-orbit: reach-orbit 3s linear infinite;
+    --animate-reach-letter: reach-letter 1.5s ease-in-out infinite;
+    --animate-reach-dots: reach-dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes reach-letter {
+    0% {
+        opacity: 0.25;
+        transform: translateY(3px);
+    }
+
+    25%,
+    75% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0.25;
+        transform: translateY(-2px);
+    }
+}
+
+@keyframes reach-dots {
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 0.35;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+
+    75%,
+    100% {
+        opacity: 1;
+    }
+} */

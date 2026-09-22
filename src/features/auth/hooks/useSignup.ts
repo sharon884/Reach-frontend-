@@ -11,6 +11,8 @@ import {
     signupSchema,
 } from "@/features/auth/schemas/signup.schema";
 
+import { notification } from "@/services/notification";
+
 export function useSignup() {
     const navigate = useNavigate();
 
@@ -117,19 +119,17 @@ export function useSignup() {
             );
 
             if (axios.isAxiosError(error)) {
-                setErrors({
-                    signup:
-                        error.response?.data?.message ||
+                notification.error(
+                    error.response?.data?.message ||
                         "Unable to create your account. Please try again.",
-                });
+                );
 
                 return;
             }
 
-            setErrors({
-                signup:
-                    "Something went wrong. Please try again.",
-            });
+            notification.error(
+                "Something went wrong. Please try again.",
+            );
         } finally {
             setIsSigningUp(false);
         }
@@ -154,19 +154,17 @@ export function useSignup() {
             );
 
             if (axios.isAxiosError(error)) {
-                setErrors({
-                    google:
-                        error.response?.data?.message ||
+                notification.error(
+                    error.response?.data?.message ||
                         "Unable to continue with Google. Please try again.",
-                });
+                );
 
                 return;
             }
 
-            setErrors({
-                google:
-                    "Something went wrong. Please try again.",
-            });
+            notification.error(
+                "Something went wrong. Please try again.",
+            );
         } finally {
             setIsGoogleSigningUp(false);
         }

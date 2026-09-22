@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { adminLogin } from "@/features/admin/auth/services/auth.service";
+
 import { loginSchema } from "@/features/auth/schemas/login.schema";
+
+import { notification } from "@/services/notification";
 
 export function useAdminLogin() {
     const navigate = useNavigate();
@@ -18,7 +21,7 @@ export function useAdminLogin() {
         password?: string;
     }>({});
 
-    const [loginError, setLoginError] = useState("");
+   
     const [isLoggingIn, setIsLoggingIn] = useState(false);
 
     const handleChange = (
@@ -36,7 +39,7 @@ export function useAdminLogin() {
             [name]: undefined,
         }));
 
-        setLoginError("");
+        
     };
 
     const handleSubmit = async (
@@ -44,7 +47,6 @@ export function useAdminLogin() {
     ) => {
         event.preventDefault();
 
-        setLoginError("");
 
         const result = loginSchema.safeParse(formData);
 
@@ -80,20 +82,20 @@ export function useAdminLogin() {
             });
 
             navigate("/admin/users");
-        } catch (error: unknown) {
-            if (axios.isAxiosError(error)) {
-                setLoginError(
-                    error.response?.data?.message ||
-                    "Unable to login. Please try again.",
-                );
-
-                return;
-            }
-
-            setLoginError(
+      } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+        notification.error(
+            error.response?.data?.message ||
                 "Unable to login. Please try again.",
-            );
-        } finally {
+        );
+
+        return;
+    }
+
+    notification.error(
+        "Unable to login. Please try again.",
+    );
+} finally {
             setIsLoggingIn(false);
         }
     };
@@ -105,7 +107,6 @@ export function useAdminLogin() {
     return {
         formData,
         formErrors,
-        loginError,
         isLoggingIn,
         handleChange,
         handleSubmit,

@@ -8,7 +8,6 @@ function AdminLoginPage() {
     const {
         formData,
         formErrors,
-        loginError,
         isLoggingIn,
         handleChange,
         handleSubmit,
@@ -83,22 +82,14 @@ function AdminLoginPage() {
                                 />
                             </div>
 
-                            {/* Login Error */}
-                            {loginError && (
-                                <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
-                                    {loginError}
-                                </div>
-                            )}
-
+                          
                             {/* Login Button */}
                             <Button
                                 type="submit"
                                 className="w-full"
-                                disabled={isLoggingIn}
+                                loading={isLoggingIn}
                             >
-                                {isLoggingIn
-                                    ? "Logging in..."
-                                    : "Log in"}
+                                Log in
                             </Button>
                         </form>
 

@@ -131,23 +131,15 @@ function SignupPage() {
                     )}
                 </div>
 
-                {errors.signup && (
-                    <p className="text-xs text-red-600">
-                        {errors.signup}
-                    </p>
-                )}
+              
 
                 <Button
                     type="submit"
                     className="w-full"
-                    disabled={
-                        isSigningUp ||
-                        isGoogleSigningUp
-                    }
+                    disabled={isGoogleSigningUp}
+                    loading={isSigningUp}
                 >
-                    {isSigningUp
-                        ? "Creating account..."
-                        : "Create account →"}
+                    Create account →
                 </Button>
 
                 <div className="flex items-center gap-3">
@@ -160,12 +152,7 @@ function SignupPage() {
                     <div className="h-px flex-1 bg-gray-200" />
                 </div>
 
-                {errors.google && (
-                    <p className="text-xs text-red-600">
-                        {errors.google}
-                    </p>
-                )}
-
+          
                 <GoogleSignInButton
                     onCredential={handleGoogleCredential}
                 />

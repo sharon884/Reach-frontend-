@@ -1,0 +1,315 @@
+.reach-logo {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: #5b2c6f;
+}
+
+.reach-logo__mark {
+    display: block;
+
+    width: 220px;
+    height: auto;
+
+    overflow: visible;
+}
+
+/* --------------------------------
+   People
+-------------------------------- */
+
+.reach-logo__person {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.reach-logo__head--left {
+    fill: #5b2c6f;
+}
+
+.reach-logo__body--left {
+    fill: #5b2c6f;
+}
+
+.reach-logo__head--right {
+    fill: #b56a91;
+}
+
+.reach-logo__body--right {
+    fill: #b56a91;
+}
+
+/* --------------------------------
+   Connection
+-------------------------------- */
+
+.reach-logo__connection {
+    fill: none;
+
+    stroke: #e6c7e8;
+    stroke-width: 7;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* --------------------------------
+   Static state
+-------------------------------- */
+
+.reach-logo__wordmark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reach-logo__name {
+    margin-top: -2px;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: 42px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: -0.035em;
+}
+
+.reach-logo__tagline {
+    margin-top: 7px;
+
+    font-family:
+        Inter,
+        system-ui,
+        sans-serif;
+
+    font-size: 9px;
+    font-weight: 500;
+
+    line-height: 1;
+
+    letter-spacing: 0.12em;
+
+    color: #5b2c6f;
+}
+/* --------------------------------
+   Animation
+-------------------------------- */
+
+.reach-logo--animated
+    .reach-logo__person--left {
+    animation:
+        reach-person-left
+        5s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        infinite;
+}
+
+.reach-logo--animated
+    .reach-logo__person--right {
+    animation:
+        reach-person-right
+        5s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        infinite;
+}
+
+.reach-logo--animated
+    .reach-logo__connection {
+    stroke-dasharray: 280;
+    stroke-dashoffset: 280;
+
+    animation:
+        reach-connection
+        5s
+        ease-out
+        infinite;
+}
+
+.reach-logo--animated
+    .reach-logo__wordmark {
+    animation:
+        reach-wordmark
+        5s
+        ease-out
+        infinite;
+}
+
+/* --------------------------------
+   Left person
+-------------------------------- */
+
+@keyframes reach-person-left {
+    0% {
+        opacity: 0;
+
+        transform:
+            translateX(-95px)
+            scale(0.92);
+    }
+
+    12% {
+        opacity: 1;
+
+        transform:
+            translateX(0)
+            scale(1);
+    }
+
+    82% {
+        opacity: 1;
+
+        transform:
+            translateX(0)
+            scale(1);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translateX(-95px)
+            scale(0.92);
+    }
+}
+
+/* --------------------------------
+   Right person
+-------------------------------- */
+
+@keyframes reach-person-right {
+    0% {
+        opacity: 0;
+
+        transform:
+            translateX(95px)
+            scale(0.92);
+    }
+
+    12% {
+        opacity: 1;
+
+        transform:
+            translateX(0)
+            scale(1);
+    }
+
+    82% {
+        opacity: 1;
+
+        transform:
+            translateX(0)
+            scale(1);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translateX(95px)
+            scale(0.92);
+    }
+}
+
+/* --------------------------------
+   Connection
+-------------------------------- */
+
+@keyframes reach-connection {
+    0% {
+        opacity: 0;
+        stroke-dashoffset: 280;
+    }
+
+    15% {
+        opacity: 0;
+        stroke-dashoffset: 280;
+    }
+
+    28% {
+        opacity: 1;
+        stroke-dashoffset: 0;
+    }
+
+    82% {
+        opacity: 1;
+        stroke-dashoffset: 0;
+    }
+
+    100% {
+        opacity: 0;
+        stroke-dashoffset: 280;
+    }
+}
+
+/* --------------------------------
+   Wordmark
+-------------------------------- */
+
+@keyframes reach-wordmark {
+    0% {
+        opacity: 0;
+
+        transform:
+            translateY(8px);
+    }
+
+    25% {
+        opacity: 0;
+
+        transform:
+            translateY(8px);
+    }
+
+    36% {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
+    82% {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translateY(8px);
+    }
+}
+/* --------------------------------
+   Reduced motion
+-------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .reach-logo--animated
+        .reach-logo__person--left,
+    .reach-logo--animated
+        .reach-logo__person--right,
+    .reach-logo--animated
+        .reach-logo__connection,
+    .reach-logo--animated
+        .reach-logo__wordmark {
+        animation: none;
+    }
+
+    .reach-logo--animated
+        .reach-logo__connection {
+        stroke-dashoffset: 0;
+    }
+
+    .reach-logo--animated
+        .reach-logo__wordmark {
+        opacity: 1;
+    }
+}
