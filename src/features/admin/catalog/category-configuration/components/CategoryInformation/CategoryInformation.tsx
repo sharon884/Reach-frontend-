@@ -9,6 +9,8 @@ import Input from "@/components/atoms/Input";
 import Select from "@/components/atoms/Select";
 import Textarea from "@/components/atoms/Textarea";
 
+import { notification } from "@/services/notification";
+
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 import {
@@ -67,9 +69,9 @@ function CategoryInformation() {
         updateCategory,
         {
             isLoading: isSaving,
-            isError: isSaveError,
         },
     ] = useUpdateCategoryMutation();
+
 
     const {
         register,
@@ -90,10 +92,8 @@ function CategoryInformation() {
         },
     });
 
-    /*
-     * Redux is hydrated from the draft API.
-     * Keep the form synchronized with the Redux category state.
-     */
+
+
     useEffect(() => {
         reset({
             name: category.name,
@@ -136,11 +136,32 @@ function CategoryInformation() {
                 parentId:
                     updatedDraft.category.parentId,
             });
-        } catch {
-            /*
-             * RTK Query exposes the error through
-             * isSaveError. No local error state is required.
-             */
+
+            notification.success(
+                "Category information saved successfully.",
+            );
+        } catch (error) {
+            console.error(
+                "Failed to save category information:",
+                error,
+            );
+
+            if (
+                error &&
+                typeof error === "object" &&
+                "data" in error &&
+                error.data &&
+                typeof error.data === "object" &&
+                "message" in error.data &&
+                typeof error.data.message === "string"
+            ) {
+                notification.error(error.data.message);
+                return;
+            }
+
+            notification.error(
+                "Failed to save category information. Please try again.",
+            );
         }
     };
 
@@ -293,12 +314,7 @@ function CategoryInformation() {
                     )}
                 </div>
 
-                {/* API Error */}
-                {isSaveError && (
-                    <p className="text-xs text-red-600">
-                        Failed to save category information.
-                    </p>
-                )}
+
 
                 {/* Save */}
                 <div className="flex items-center justify-end gap-3 pt-2">

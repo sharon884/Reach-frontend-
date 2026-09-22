@@ -13,6 +13,8 @@ import {
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
+import { notification } from "@/services/notification";
+
 import { useParams } from "react-router-dom";
 
 import Button from "@/components/atoms/Button";
@@ -56,7 +58,6 @@ function CoreFields() {
         configureCoreFields,
         {
             isLoading: isSaving,
-            isError: isSaveError,
         },
     ] = useConfigureCoreFieldsMutation();
 
@@ -81,7 +82,7 @@ function CoreFields() {
             !coreFields.some(
                 (field) =>
                     field.fieldKey ===
-                        definition.key &&
+                    definition.key &&
                     field.isEnabled,
             ),
     );
@@ -100,13 +101,13 @@ function CoreFields() {
                     coreFields.map((field) =>
                         field.fieldKey === fieldKey
                             ? {
-                                  ...field,
-                                  isEnabled,
-                                  required:
-                                      isEnabled
-                                          ? field.required
-                                          : false,
-                              }
+                                ...field,
+                                isEnabled,
+                                required:
+                                    isEnabled
+                                        ? field.required
+                                        : false,
+                            }
                             : field,
                     ),
                 ),
@@ -142,9 +143,9 @@ function CoreFields() {
                 coreFields.map((field) =>
                     field.fieldKey === fieldKey
                         ? {
-                              ...field,
-                              required,
-                          }
+                            ...field,
+                            required,
+                        }
                         : field,
                 ),
             ),
@@ -224,12 +225,32 @@ function CoreFields() {
             dispatch(
                 hydrateFromDraft(updatedDraft),
             );
-        } catch {
-            /*
-             * RTK Query exposes the error through
-             * isSaveError. No local error state
-             * is required.
-             */
+
+            notification.success(
+                "Core fields saved successfully.",
+            );
+        } catch (error) {
+            console.error(
+                "Failed to save core fields:",
+                error,
+            );
+
+            if (
+                error &&
+                typeof error === "object" &&
+                "data" in error &&
+                error.data &&
+                typeof error.data === "object" &&
+                "message" in error.data &&
+                typeof error.data.message === "string"
+            ) {
+                notification.error(error.data.message);
+                return;
+            }
+
+            notification.error(
+                "Failed to save core fields. Please try again.",
+            );
         }
     };
 
@@ -364,11 +385,7 @@ function CoreFields() {
                 </div>
             </DndContext>
 
-            {isSaveError && (
-                <p className="mt-4 text-xs text-red-600">
-                    Failed to save core fields.
-                </p>
-            )}
+
 
             <div className="mt-6 flex justify-end">
                 <Button

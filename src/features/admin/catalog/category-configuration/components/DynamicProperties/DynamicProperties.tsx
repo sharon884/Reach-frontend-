@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { useParams } from "react-router-dom";
 
 import {
@@ -17,6 +18,9 @@ import {
 } from "@dnd-kit/sortable";
 
 import Button from "@/components/atoms/Button";
+
+import { notification } from "@/services/notification";
+
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 import {
@@ -49,7 +53,6 @@ function DynamicProperties() {
         configureDynamicProperties,
         {
             isLoading: isSaving,
-            isError: isSaveError,
         },
     ] = useConfigureDynamicPropertiesMutation();
 
@@ -163,11 +166,33 @@ function DynamicProperties() {
             );
 
             setValidationErrors([]);
-        } catch {
-            /*
-             * RTK Query exposes the API error
-             * through isSaveError.
-             */
+
+            notification.success(
+                "Dynamic properties saved successfully.",
+            );
+
+        } catch (error) {
+            console.error(
+                "Failed to save dynamic properties:",
+                error,
+            );
+
+            if (
+                error &&
+                typeof error === "object" &&
+                "data" in error &&
+                error.data &&
+                typeof error.data === "object" &&
+                "message" in error.data &&
+                typeof error.data.message === "string"
+            ) {
+                notification.error(error.data.message);
+                return;
+            }
+
+            notification.error(
+                "Failed to save dynamic properties. Please try again.",
+            );
         }
     };
 
@@ -251,11 +276,6 @@ function DynamicProperties() {
                 </DndContext>
             )}
 
-            {isSaveError && (
-                <p className="mt-4 text-xs text-red-600">
-                    Failed to save dynamic properties.
-                </p>
-            )}
 
             <div className="mt-6 flex justify-end">
                 <Button
