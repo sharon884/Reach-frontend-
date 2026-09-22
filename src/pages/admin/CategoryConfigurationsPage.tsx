@@ -2,11 +2,12 @@ import { useCreateCategoryConfigurationDraft } from "@/features/admin/catalog/ca
 
 import { Button } from "@/components/atoms";
 
+
+
 function CategoryConfigurationsPage() {
     const {
         handleCreateDraft,
         isLoading,
-        isError,
     } = useCreateCategoryConfigurationDraft();
 
     return (
@@ -32,12 +33,6 @@ function CategoryConfigurationsPage() {
                     + Create Category Configuration
                 </Button>
             </div>
-
-            {isError && (
-                <p className="text-sm text-red-600">
-                    Failed to create category configuration.
-                </p>
-            )}
 
             <div className="rounded-xl bg-reach-card p-8">
                 <p className="text-sm text-reach-text/60">

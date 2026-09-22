@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { notification } from "@/services/notification";
+
 import {
     getUsers,
     updateUserStatus,
@@ -10,6 +12,8 @@ import type {
     AdminUserSortField,
     AdminUserStatus,
 } from "@/features/admin/users/types/user.types";
+
+
 
 export function useAdminUsers() {
     const [users, setUsers] = useState<AdminUser[]>([]);
@@ -31,7 +35,7 @@ export function useAdminUsers() {
     const [updatingUserId, setUpdatingUserId] =
         useState<string | null>(null);
 
-    const [statusError, setStatusError] = useState("");
+
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -43,6 +47,8 @@ export function useAdminUsers() {
             clearTimeout(timer);
         };
     }, [search]);
+
+
 
     useEffect(() => {
         async function fetchUsers() {
@@ -77,12 +83,13 @@ export function useAdminUsers() {
         fetchUsers();
     }, [page, debouncedSearch, sortBy, sortOrder]);
 
+
+
     async function handleStatusChange(
         userId: string,
         status: AdminUserStatus,
     ) {
         try {
-            setStatusError("");
             setUpdatingUserId(userId);
 
             const updatedUser = await updateUserStatus(
@@ -97,20 +104,38 @@ export function useAdminUsers() {
                         : user,
                 ),
             );
+
+            notification.success(
+                status === "BLOCKED"
+                    ? "User blocked successfully."
+                    : "User unblocked successfully.",
+            );
         } catch (error) {
             console.error(
                 "Failed to update user status:",
                 error,
             );
 
-            setStatusError(
+            if (
+                error &&
+                typeof error === "object" &&
+                "data" in error &&
+                error.data &&
+                typeof error.data === "object" &&
+                "message" in error.data &&
+                typeof error.data.message === "string"
+            ) {
+                notification.error(error.data.message);
+                return;
+            }
+
+            notification.error(
                 "Failed to update user status. Please try again.",
             );
         } finally {
             setUpdatingUserId(null);
         }
     }
-
     return {
         users,
         loading,
@@ -121,7 +146,6 @@ export function useAdminUsers() {
         sortBy,
         sortOrder,
         updatingUserId,
-        statusError,
         setPage,
         setSearch,
         setSortBy,

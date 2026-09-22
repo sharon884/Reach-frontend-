@@ -19,7 +19,6 @@ export default function AdminUsersPage() {
         sortBy,
         sortOrder,
         updatingUserId,
-        statusError,
         setPage,
         setSearch,
         setSortBy,
@@ -67,12 +66,6 @@ if (loading) {
                     setPage(1);
                 }}
             />
-
-            {statusError && (
-                <p className="mb-4 text-sm text-red-600">
-                    {statusError}
-                </p>
-            )}
 
             <AdminUsersTable
                 users={users}

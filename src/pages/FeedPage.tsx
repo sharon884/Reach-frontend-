@@ -1,4 +1,7 @@
 import { useNavigate } from "react-router-dom";
+
+import { notification } from "@/services/notification";
+
 import { logout } from "@/features/auth/services/auth.service";
 function FeedPage() {
     const navigate = useNavigate();
@@ -9,8 +12,26 @@ function FeedPage() {
             navigate("/login");
         } catch (error) {
             console.error("Logout failed:", error);
+
+            if (
+                error &&
+                typeof error === "object" &&
+                "data" in error &&
+                error.data &&
+                typeof error.data === "object" &&
+                "message" in error.data &&
+                typeof error.data.message === "string"
+            ) {
+                notification.error(error.data.message);
+                return;
+            }
+
+            notification.error(
+                "Failed to log out. Please try again.",
+            );
         }
     }
+
 
     return (
         <div className="min-h-screen bg-reach-surface">

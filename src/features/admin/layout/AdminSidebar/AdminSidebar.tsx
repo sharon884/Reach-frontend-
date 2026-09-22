@@ -1,5 +1,11 @@
 import { NavLink, useNavigate } from "react-router-dom";
+
 import { adminLogout } from "@/features/admin/auth/services/auth.service";
+
+import { notification } from "@/services/notification";
+
+
+
 export default function AdminSidebar() {
 
     const navigate = useNavigate();
@@ -10,7 +16,27 @@ export default function AdminSidebar() {
             await adminLogout();
             navigate("/admin/login");
         } catch (error) {
-            console.error("Admin logout failed:", error);
+            console.error(
+                "Admin logout failed:",
+                error,
+            );
+
+            if (
+                error &&
+                typeof error === "object" &&
+                "data" in error &&
+                error.data &&
+                typeof error.data === "object" &&
+                "message" in error.data &&
+                typeof error.data.message === "string"
+            ) {
+                notification.error(error.data.message);
+                return;
+            }
+
+            notification.error(
+                "Failed to log out. Please try again.",
+            );
         }
     }
 
