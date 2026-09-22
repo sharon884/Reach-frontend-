@@ -11,7 +11,7 @@ function CategoryConfigurationsPage() {
     } = useCreateCategoryConfigurationDraft();
 
     return (
-        <div className="p-6">
+       <div className="min-h-screen bg-reach-beige px-6 py-6 md:px-8">
             <div className="mb-8 flex items-center justify-between">
                 <div>
 

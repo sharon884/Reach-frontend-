@@ -51,7 +51,7 @@ export default function AdminSidebar() {
     ];
 
     return (
-        <aside className="flex h-screen w-64 shrink-0 flex-col border-r border-reach-plum/10 bg-reach-card">
+       <aside className="sticky top-0 z-20 flex h-screen w-64 shrink-0 flex-col border-r border-reach-plum/10 bg-reach-card">
             {/* Brand */}
             <div className="border-b border-reach-plum/10 px-6 py-6">
                 <p className="text-xl font-bold tracking-tight text-reach-plum">

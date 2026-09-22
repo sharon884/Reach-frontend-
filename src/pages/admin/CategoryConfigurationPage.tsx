@@ -35,7 +35,7 @@ function CategoryConfigurationPage() {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="min-h-screen space-y-6 bg-reach-beige px-6 py-6 md:px-8">
             <div>
                 <h1 className="text-xl font-semibold text-reach-text">
                     Category Configuration

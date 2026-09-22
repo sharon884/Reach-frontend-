@@ -45,7 +45,7 @@ if (loading) {
     }
 
     return (
-        <div className="p-6">
+       <div className="min-h-screen bg-reach-beige px-6 py-6 md:px-8">
             <h1 className="mb-6 text-2xl font-semibold text-reach-text">
                 Users
             </h1>
