@@ -20,29 +20,62 @@ import VerifyPasswordResetOtpPage from "@/pages/VerifyPasswordResetOtpPage";
 
 import ResetPasswordPage from "@/pages/ResetPasswordPage";
 
+import { ROUTES } from "@/constants/routes";
+
+
 
 function AppRoutes() {
     return (
         <Routes>
-            <Route path="/" element={<ReachIntroPage />} />
-            <Route path="/landing" element={<LandingPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/verify-otp" element={<VerifyOtpPage />} />
-            <Route path="/feed" element={<FeedPage />} />
+            <Route
+                path={ROUTES.ROOT}
+                element={<ReachIntroPage />}
+            />
 
-            <Route  path="/admin/*" element={<AdminRoutes />} />
-               
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route
+                path={ROUTES.LANDING}
+                element={<LandingPage />}
+            />
 
-            <Route path="/verify-password-reset-otp" element={<VerifyPasswordResetOtpPage />} />
-    
- <Route  path="/reset-password" element={<ResetPasswordPage />} />
-    
-    
+            <Route
+                path={ROUTES.LOGIN}
+                element={<LoginPage />}
+            />
 
-            
+            <Route
+                path={ROUTES.SIGNUP}
+                element={<SignupPage />}
+            />
 
+            <Route
+                path={ROUTES.VERIFY_OTP}
+                element={<VerifyOtpPage />}
+            />
+
+            <Route
+                path={ROUTES.FEED}
+                element={<FeedPage />}
+            />
+
+            <Route
+                path={`${ROUTES.ADMIN.ROOT}/*`}
+                element={<AdminRoutes />}
+            />
+
+            <Route
+                path={ROUTES.FORGOT_PASSWORD}
+                element={<ForgotPasswordPage />}
+            />
+
+            <Route
+                path={ROUTES.VERIFY_PASSWORD_RESET_OTP}
+                element={<VerifyPasswordResetOtpPage />}
+            />
+
+            <Route
+                path={ROUTES.RESET_PASSWORD}
+                element={<ResetPasswordPage />}
+            />
         </Routes>
     );
 }
